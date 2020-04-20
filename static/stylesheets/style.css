@@ -1,0 +1,442 @@
+* { margin:0;}
+
+html, body, #wrap, #content_container{
+	height: 100%;
+	width: 100%;
+}
+
+body > #wrap {height: auto; min-height: 100%;}
+
+#wrap {
+	background: white url("../images/bg3.jpg") no-repeat;
+	background-size: cover;
+	background-position: center;
+	background-attachment: fixed;
+	font-family: 'Montserrat Alternates', sans-serif;
+}
+
+nav {
+	height: 15vh;
+	opacity: 90%;
+	background-color: rgb(56, 56, 56);
+}
+
+#content_container {
+	background-color: rgb(58, 57, 57);
+	min-height: 100vh;
+	height: auto;
+	text-align: center;
+	opacity: 90%;
+}
+
+.user_href_container {
+	text-align: center;
+	padding-bottom: 10px;
+}
+
+.user_href {
+	color: #1957fb;
+	font-size: 24px;
+	font-weight: bold;
+	text-decoration: none;
+	text-shadow: white 0 0 10px;
+}
+
+a {
+	text-decoration: none;
+	outline: none;
+}
+
+a:hover {
+	color: #54aaff;
+}
+
+strong {
+	color: blue;
+}
+
+#main {
+	height: 150px;
+}
+
+footer {
+	height: 150px;
+	padding: 15px 20px;
+	background-color:rgb(83, 83, 83);
+}
+
+footer a {
+	color: rgb(150, 150, 150);
+	font-size: 20px;
+	margin: 10px;
+	transition: all .5s ease;
+}
+
+footer #hr {
+	border: none;
+	color: rgb(150, 150, 150);
+	background-color: rgb(150, 150, 150);
+	margin: 10px 5px 20px;
+}
+
+footer .container.copyright {
+	margin: 70px 0px 0px;
+}
+
+footer .container.copyright a {
+	text-decoration: none;
+}
+
+ul {
+	list-style: none;
+	padding: 0px;	
+}
+
+p, label, a {
+	color: rgb(141, 141, 141);
+}
+
+.text_container {
+	float: left;
+	width: calc(100% - 60px);
+	margin: 30px 30px;
+	font-size: 18px;
+	line-height: 24px;
+	overflow-wrap: break-word;
+}
+
+.btn {
+	height: 40px;
+	width: 80px;
+	margin: 0px auto;
+	font-size: 16px;
+	border: none;
+	border-radius: 10px;
+	background-color: #3ab5fc;
+	color: white;
+}
+
+.btn:hover {
+	text-shadow: white 0 0 10px;
+}
+
+.preview-topside {
+	display: inline-block;
+	opacity: 1;
+	min-height: 70vh;
+	width: 65%;
+	text-align: initial;
+	padding: 6vh;
+}
+
+.preview-content-wrap {
+	opacity: 1;
+	border: 1px solid rgb(150, 150, 150);
+	width: calc(100% - 2px);
+	margin-bottom: 4vh;
+}
+
+/*############*/
+/* characters */
+/*############*/
+
+.preview-char-text-info {
+	display: inline-block;
+	min-width: calc(100% - 80px);
+	vertical-align: top;
+	padding: 20px 40px;
+	font-weight: bold;
+	font-style: italic;
+}
+
+.preview-char-name {
+	display: inline-block;
+	font-size: 24px;
+	margin-right: 5px;
+}
+
+.preview-char-about {
+	display: inline-block;
+	font-size: 18px;
+}
+
+/*##################*/
+/* every's item view*/
+/*##################*/
+
+.topside {
+	display: inline-block;
+	opacity: 80%;
+	min-height: 70vh;
+	width: 65%;
+	text-align: initial;
+	padding: 6vh;
+}
+
+.item-content-wrap {
+	background-color: rgb(83, 83, 83);
+	border: 4px solid rgb(150, 150, 150);
+	padding: 20px;
+	margin-bottom: 15vh;
+}
+
+.item-control-panel {
+	margin-right: 20px;
+	text-align: right;
+}
+
+.control-btn-wrap:hover, .item-control-button:hover {
+	opacity: 1;
+}
+
+.item-control-button {
+	border: none;
+	display: block;
+	background-color: rgb(0, 197, 247);
+}
+
+.preview-text-info-wrap p{
+	color: rgb(78, 78, 78);
+}
+
+.save-item-edit-button-wrap {
+	text-align: right;
+}
+
+/*###########*/
+/* character */
+/*###########*/
+
+.control-btn-wrap {
+	display: inline-block;
+	border-radius: 5px;
+	opacity: 0.5;
+	background-color: rgb(0, 197, 247);
+	padding: 2px;
+}
+
+/* .char-edit-btn-form {
+	background-color: rgb(0, 197, 247);
+} */
+
+.title-container {
+	display: inline-block;
+	margin-bottom: 15px;
+	background-color: rgb(180, 180, 180);
+	padding: 4px;
+}
+
+.char-content-container {
+	font-size: 18px;
+	padding-left: 4px;	
+}
+
+.char-text-info {
+	display: inline-block;
+	min-width: calc(100% - 40vh - 48px + 20px);
+	vertical-align: top;
+}
+
+.char-name {
+	margin: 20px;
+	margin-bottom: 60px;
+}
+
+.char-photo {
+	display: inline-block;
+	height: 40vh;
+	width: 40vh;
+	margin-top: 20px;
+	text-align: right;
+}
+
+.char-photo img{
+	display: inline-block;
+}
+
+.char-about {
+	margin: 20px;
+}
+
+.char-excerpt {
+	display: inline-block;
+	margin: 20px;
+	vertical-align: top;
+}
+
+.char-button-read {
+	text-align: right;
+	padding: 3px;
+}
+
+.char-button-read div{
+	display: inline-block;
+}
+
+.itemlink {
+	display: block;
+}
+
+.itemlink:visited {
+	color: rgb(212, 212, 212)
+}
+
+.itemlink:hover {
+	color: #54aaff;
+}
+
+.char-about-edit {
+	height: 50vh;
+	width: 90%;
+}
+
+.char-excerpt-edit {
+	display: inline-block;
+	width: 100%;
+}
+
+.char-excerpt-edit-wrap {
+	margin: 20px 0px 20px 20px;
+}
+
+.char-excerpt-form-wrap  {
+	width: calc(100% - 40px);
+	height: 50vh;
+}
+
+/*###########*/
+/* histories */
+/*###########*/
+
+.preview-history-text-info {
+	padding: 20px 20px;
+	font-weight: bold;
+	font-style: italic;
+	font-size: 18px;
+}
+
+.preview-history-chapters-content {
+	padding: 5px 20px;
+}
+
+.add-chapter-button {
+	color: rgb(212, 212, 212);
+}
+
+/*#########*/
+/* history */
+/*#########*/
+
+.hist-text-info {
+	display: inline-block;
+	vertical-align: top;
+}
+
+.hist-photo {
+	display: inline-block;
+	margin-left: 40%;
+	height: 40vh;
+	width: 40vh;
+}
+
+/*##########*/
+/* chapters */
+/*##########*/
+
+.chap-topside {
+	height: 96%;
+	width: 80%;
+	padding: 2% 10%;
+}
+
+.chapters-wrap {
+}
+
+.ch-topside-block {
+	padding: 5%;
+	margin-bottom: 20px;
+	background-color: whitesmoke;
+	border: 1px solid rgb(150, 150, 150);
+}
+
+.ch-hist-title-wrap {
+	
+}
+
+.ch-hist-control-panel {
+	
+}
+
+.chap-unit-wrap {
+	
+}
+
+.chap-content-wrap {
+	background-color: white;
+}
+
+.chap-content-wrap p {
+	color: black;
+}
+
+.chap-title-block {
+
+}
+
+.chap-edit-btn-wrap {
+	margin-top: 20px;
+}
+
+.chap-edit-btn {
+	font-size: 14px;
+	display: block;
+	color: black;
+}
+
+.chap-title-wrap {
+	padding-top: 1%;
+	padding-bottom: 2%;
+}
+
+.chap-index {
+	font-size: 20px;
+}
+
+.chap-title {
+	margin: 5px;
+	font-weight: 550;
+	font-size: 22px;
+}
+
+.chap-text-container {
+
+}
+
+.chap-text-wrap {
+	padding: 0px 60px 40px 60px;
+	text-align: left;
+}
+
+.chap-text {
+	white-space: pre-line;
+}
+
+/*##############*/
+/* chapter-edit */
+/*##############*/
+
+#put-chap-form {
+	padding: 10px;
+}
+
+.chap-edit-textarea {
+	width: calc(100% - 2px);
+	min-height: 400px; 
+	height: 100%;
+	padding: 0;
+	margin: 20px 0px;
+}
+
+.chap-edit-submit-wrap {
+	/* margin-bottom: 10px; */
+}

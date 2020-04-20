@@ -1,0 +1,53 @@
+{{template "header.html"}}
+    <div class="preview-topside">
+        <ul>
+            {{range $_, $hist_obj := .histories}}
+                <li>
+                    <div class="preview-content-wrap" style="background:white">
+                        <a style="display:block" href="histories/{{$hist_obj.History.Title}}">
+                        <div class="preview-history-text-info preview-text-info-wrap" style="background:white url('../../data/images/{{$hist_obj.History.Photo}}') no-repeat center; background-size: cover;">
+                                <div class="preview-history-title preview-title-wrap">
+                                    <div class="preview-history-title-content">
+                                        <p>{{$hist_obj.History.Title}}:</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                        <div class="preview-history-chapters">
+                            {{range $i, $chapter := $hist_obj.Chapters}}
+                                <div class="preview-history-chapters-content">
+                                    <a href="histories/{{$hist_obj.History.Title}}/chapters" style="display: block;">{{inc $i}}. {{$chapter.Title}}</a>
+                                </div>
+                            {{end}}
+                            <div class="preview-history-chapters-content">
+                                {{$create := $.params.Get "create"}}
+                                    {{if $create}}
+                                        <form action="histories/{{$hist_obj.History.Title}}/chapters" method="POST" class="chap-create-form">
+                                            <input type="text" name="title"/>
+                                            <input type="submit" class="add" value="сохранить"/>
+                                        </form>
+                                    {{else}}
+                                        <a href="?create=true" class="add-chapter-button">+Добавить главу</a>
+                                    {{end}}
+                            </div>
+                        </div>
+                        <div class="preview-history-button-container">
+                            <a href="" class="btn"></a>
+                        </div>
+                    </div>
+                </li>
+            {{end}}
+        </ul>
+    </div>
+    <div id="bottomside">
+		<form method="POST" enctype="multipart/form-data" id="history-form" class="post-form"> <!--</form> onsubmit="onSubmit(this)"-->
+            <p>History:</p>
+            <input type="hidden" name="location" value="."/>
+			<label for="fhist-title">History title:</label>
+            <input type="text" id="fhist-title" name="title" required><br><br>
+            <label for="pname">Photo:</label>
+            <input type="file" id="pname" name="photo_file" accept="image/*"><br><br>
+			<input type="submit" id="save" class="btn" value="add"/>
+		</form>
+	</div>
+{{template "footer.html"}}

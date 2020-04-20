@@ -1,0 +1,41 @@
+{{template "header.html"}}
+    <div class="preview-topside">
+        <ul>
+            {{range .characters}}
+                <li>
+                    <div class="preview-content-wrap"  style="background:white url('../data/images/{{.Photo}}') no-repeat center; background-size: cover;">
+                        <a style="display:block" href="characters/{{.ID}}">
+                            <div class="preview-char-text-info preview-text-info-wrap">
+                                <div class="preview-char-name preview-title-wrap">
+                                    <div class="preview-char-name-content">
+                                        <p>{{ .Name }}:</p>
+                                    </div>
+                                </div>
+                                <div class="preview-char-about">
+                                    <div class="preview-char-about-content">
+                                        <p>{{ .About }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </li>
+            {{end}}
+        </ul>
+    </div>
+    <div id="bottomside">
+		<form method="POST" enctype="multipart/form-data" id="post-char-form" class="char-form"> <!--</form> onsubmit="onSubmit(this)"-->
+            <p>Character:</p>
+            <input type="hidden" name="location" value="."/>
+			<label for="fname">Name:</label>
+            <input type="text" id="fname" name="name" required><br><br>
+            <label for="lname">About:</label>
+            <input type="text" id="lname" name="about"><br><br>
+            <label for="ename">Excerpt:</label>
+            <Textarea form="post-char-form" id="ename" name="excerpt"></Textarea><br><br>
+            <label for="pname">Photo:</label>
+            <input type="file" id="pname" name="photo_file" accept="image/*"><br><br>
+			<input type="submit" id="save" class="btn" value="Save"/>
+		</form>
+	</div>
+{{template "footer.html"}}

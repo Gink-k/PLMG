@@ -1,0 +1,35 @@
+ {{template "header.html"}}
+ <div class="chap-topside">
+    <div class="chapters-wrap">
+        <div class="ch-topside-block" style="background:white url('../../../../data/images/{{.history.Photo}}') no-repeat center; background-size: cover;">
+            <div class="ch-hist-title-wrap">
+                <h1>{{ .history.Title }}</h1>
+            </div>
+            <div class="ch-hist-control-panel"></div>
+        </div>
+        {{$index := 0}}
+        {{$edit := $.params.Get "edit"}}
+            {{range .chapters}}
+                {{$index = inc $index}}
+                {{if or (eq $edit "") (ne $edit .Title)}}
+                    {{template "chap-view" dict "index" $index "chapter" .}}
+                {{else}}
+                    {{template "chap-edit" dict "index" $index "chapter" .}}
+                {{end}}
+            {{end}}
+        {{$add := $.params.Get "add"}}
+            {{if $add}}
+                {{template "chap-create" $index}}
+            {{else}}
+                <div class="chap-add-btn-side">
+                    <div class="chap-add-btn-wrap">
+                        <form method="GET" class="chap-add-btn-form">
+                            <input type="hidden" name="add" value="true" />
+                            <input type="submit" class="chap-edit-btn item-control-button" value="Добавить новую главу"/>
+                        </form>
+                    </div>
+                </div>
+            {{end}}
+    </div>
+</div>
+{{template "footer.html"}}

@@ -1,0 +1,39 @@
+{{template "header.html"}}
+    <div class="topside">
+        <div class="item-content-wrap">
+            <div class="item-control-panel">
+                <div class="hist-delete control-btn-wrap">
+                    <form method="POST">
+                        <input type="hidden" name="location" value=".."/>
+                        <input type="submit" class="item-control-button" value="Удалить"/>
+                    </form>
+                </div>
+            </div>
+            <form action="{{.history.Title}}/edit" method="POST" enctype="multipart/form-data" id="put-hist-form" class="hist-form">
+                <input type="hidden" name="location" value="../../"/>
+                <div class="history-edit-wrap">
+                    <div class="hist-text-info">
+                        <div class="hist-title">
+                            <div class="hist-title-title title-container">
+                                <h3>Заглавие:</h3>
+                            </div>
+                            <div class="hist-title-input-wrap">
+                                <input type="text" name="title" value="{{.history.Title}}" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="hist-photo">
+                        <input type="file" name="photo_file" accept="image/*">
+                        <input type="hidden" name="photo" value="{{.history.Photo}}"/>
+                        {{if .history.Photo}}
+                            <img src="../../../data/images/{{.history.Photo}}" alt="Фото не найдено" width="100%" height="100%">
+                        {{end}}
+                    </div>
+                </div>
+                <div class="save-item-edit-button-wrap">
+                    <div><input type="submit" id="save" value="Сохранить"/></div>
+                </div>
+            </form>
+        </div>
+    </div>
+{{template "footer.html"}}

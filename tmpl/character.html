@@ -1,0 +1,12 @@
+{{template "header.html"}}
+    <div class="topside">
+        <div class="item-content-wrap">
+            {{$edit := .params.Get "edit"}}
+                {{if $edit}}
+                    {{template "char-edit" .character}}
+                {{else}}
+                    {{template "char-view" .character}}
+                {{end}}
+        </div>
+    </div>
+{{template "footer.html"}}

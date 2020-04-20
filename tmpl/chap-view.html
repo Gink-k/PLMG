@@ -1,0 +1,38 @@
+{{define "chap-view"}}
+    <div class="chap-unit-wrap" id="{{ .chapter.Title }}">
+        <div class="chap-content-wrap">
+                <div class="chap-title-block">
+                    <div class="item-control-panel">                                
+                        <div class="chap-edit-btn-wrap control-btn-wrap">
+                            <form method="GET" class="chap-edit-btn-form edit-btn-form">
+                                <input type="hidden" name="edit" value="{{ .chapter.Title }}" />
+                                <input type="submit" class="chap-edit-btn item-control-button" value="Ред."/>
+                            </form>
+                        </div>
+                        <div class="chap-delete-btn-wrap control-btn-wrap">
+                            <form action="chapters/{{ .chapter.Title }}" method="POST">
+                                <input type="hidden" name="location" value=".."/>
+                                <input type="submit" class="item-control-button" value="Удалить"/>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="chap-title-wrap">
+                        <p>
+                            <span class="chap-index"> Глава {{ .index }}:</span>
+                            <span class="chap-title">{{ .chapter.Title }}</span>
+                        </p>
+                    </div>
+                </div>
+                {{if .chapter.Photo}}
+                    <div class="chap-photo-wrap">
+                        <img src="../../../../data/images/{{.chapter.Photo}}" alt="Фото не найдено" width="50%" height="50%">
+                    </div>
+                {{end}}
+                <div class="chap-text-container">    
+                    <div class="chap-text-wrap">
+                        <p class="chap-text">{{ .chapter.Text }}</p>
+                    </div>
+                </div>
+        </div>
+    </div>
+{{end}}

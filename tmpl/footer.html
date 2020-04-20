@@ -1,0 +1,38 @@
+		</div>
+		<script>
+			function onSubmit(form) {
+				let formData = new FormData(form);
+				var xhr = new XMLHttpRequest();
+				let method = form.elements._method.value;
+				let path = form.action
+				if (method == "put") {
+					xhr.open("PUT", path);
+					xhr.send(formData);
+				} else if (method == "delete") {
+					xhr.open("DELETE", path);
+					if (confirm("Вы точно уверены в своем решении?")) {
+						xhr.send(formData);
+					}
+				}
+				return false;
+			}
+			function getPathFromUrl(url) {
+ 				return url.split(/[?#]/)[0];
+			}
+		</script>
+		<footer class="footer">
+			<div id="hr">
+				<hr>
+			</div>
+			<div id="navigation_container">	
+			</div>
+			<div class="container text-center">
+				<a href="#"><i class="fa fa-vk"></i></a>
+				<a href="#"><i class="fa fa-envelope"></i></a>
+			</div>
+			<div class="container copyright">
+				<a href="#"><i class="fa fa-copyright"></i> 2020 developed by Go</a>
+			</div>
+		</footer>
+	</body>
+</html>
