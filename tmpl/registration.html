@@ -1,0 +1,40 @@
+{{template "header.html" .}}
+    <div id="user-regist-container" class="topside">
+        <div id="user-regist-wrap">
+            <div id="regist-about-wrap">
+                <div id="regist-about-title">
+                    <h1>О PLMG:</h1>
+                </div>
+                <div id="regist-about-text">
+                    <p>Привет!<br>Этот сайт - почти наш дом! Мы его любим и почитаем. <br><br> Если ты хочешь к нам присоединиться то, милости прошу, регистрируйся!</p>
+                </div>
+            </div>
+            <div id="regist-form-container">
+                <div id="regist-form-wrap">
+                    <form method="POST" enctype="multipart/form-data"> <!--</form> onsubmit="onSubmit(this)"-->
+                        <p id="regist-form-title" class="form-title">Регистрация:</p>
+                        <div class="form-fields-wrap">
+                            <input type="hidden" name="location" value="."/>
+                            <label for="uname" class="form-label">Имя:</label><br><br>
+                            <input type="text" id="uname" name="name" required><br><br>
+                            <label for="sname" class="form-label">Фамилия:</label><br><br>
+                            <input type="text" id="sname" name="surname" required><br><br>
+                            <label for="pname" class="form-label">Пароль:</label><br><br>
+                            <input type="password" id="pname" name="password" minlength="6" required><br><br>
+                            <label for="ppname" class="form-label">Повторите ваш пароль:</label><br><br>
+                            <input type="password" id="ppname" name="r_password" minlength="6" required><br><br>
+                            <label for="ename" class="form-label">Email:</label><br><br>
+                            <input type="email" id="ename" name="email" required><br><br><br><br>
+                        </div>
+                        {{if .RegistrationWarning}}
+                            <div>
+                                <p class="warning-info">{{.RegistrationWarning}}</p>
+                            </div>
+                        {{end}} 
+                        <input type="submit" id="save" class="btn" value="Save"/>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{{template "footer.html"}}

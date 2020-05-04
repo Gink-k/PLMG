@@ -1,0 +1,65 @@
+{{template "header.html" .}}
+    <div class="preview-topside">
+        <ul>
+            {{range $_, $hist_obj := .histories}}
+                <li>
+                    <div class="preview-content-wrap" style="background:white">
+                        <a style="display:block" href="histories/{{$hist_obj.History.ID}}{{if not $.user.IsAdmin}}/chapters{{end}}">
+                        <div class="preview-history-text-info preview-text-info-wrap" style="background:white url('../../data/images/{{$hist_obj.History.Photo}}') no-repeat center; background-size: cover;">
+                                <div class="preview-history-title preview-title-wrap">
+                                    <div class="preview-history-title-content">
+                                        <p>{{$hist_obj.History.Title}}:</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                        <div class="preview-history-chapters">
+                            {{range $i, $chapter := $hist_obj.Chapters}}
+                                <div class="preview-history-chapters-content">
+                                    <a href="histories/{{$hist_obj.History.ID}}/chapters" style="display: block;">{{inc $i}}. {{$chapter.Title}}</a>
+                                </div>
+                            {{end}}
+                            {{if $.user.IsAdmin}}
+                                <div class="preview-history-chapters-content">
+                                    <a href="histories/{{$hist_obj.History.ID}}/chapters?add=true#chap-create-side" class="add-chapter-button">+Добавить главу</a>
+                                </div>
+                            {{end}}
+                        </div>
+                    </div>
+                </li>
+            {{end}}
+            <li>
+                {{if .user.IsAdmin}}
+                    {{$create := .params.Get "create"}}
+                        {{if $create}}
+                            <div id="bottomside" class="preview-content-wrap">
+                                <div class="preview-history-text-info preview-text-info-wrap">
+                                    <div class="back-btn-wrap">
+                                        <a href="histories" class="btn-back"><- Назад</a>
+                                    </div>
+                                    <form method="POST" enctype="multipart/form-data" id="history-form" class="post-form"> <!--</form> onsubmit="onSubmit(this)"-->
+                                        <p class="add-form-title">History:</p>
+                                        <div class="form-fields-wrap">
+                                            <label for="fhist-title" class="hist-add-form-label">Title:</label><br><br>
+                                            <input type="text" id="fhist-title" name="title" required><br><br>
+                                            <label for="pname" class="hist-add-form-label">Photo:</label><br><br>
+                                            <input type="file" id="pname" name="photo_file" accept="image/*"><br><br>
+                                        </div>
+                                        <input type="submit" id="save" class="btn" value="add"/>
+                                    </form>
+                                </div>
+                            </div>
+                        {{else}}
+                            <div class="preview-content-wrap"  style="background-color:white;">
+                                <a style="display:block" href="histories?create=true">
+                                    <div class="preview-history-text-info preview-text-info-wrap">
+                                        <p>+Добавить новую историю</p>
+                                    </div>
+                                </a>
+                            </div>
+                        {{end}}
+                {{end}}
+            </li>
+        </ul>
+    </div>
+{{template "footer.html"}}

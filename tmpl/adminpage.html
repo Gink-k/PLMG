@@ -1,0 +1,58 @@
+{{template "header.html" .}}
+    <div id="admin-topside">
+        <div id="admin-inner-wrap">
+            {{$section := $.params.Get "section"}}
+            <div id="admin-nav">
+                <a href="?section=users">
+                    <div class="admin-nav-btn" 
+                        {{if or (eq $section "users") (eq $section "")}}
+                            style="background-color: rgb(141, 141, 141);"
+                        {{end}}
+                    >    
+                        <p {{if or (eq $section "users") (eq $section "")}}
+                                style="color: white;"
+                            {{end}}
+                        >Пользователи</p>
+                    </div>
+                </a>
+                <a href="?section=comments">
+                    <div class="admin-nav-btn" 
+                        {{if eq $section "comments"}}
+                            style="background-color: rgb(141, 141, 141);"
+                        {{end}}
+                    >    
+                        <p {{if eq $section "comments"}}
+                                style="color: white;"
+                            {{end}}
+                        >Комментарии</p>
+                    </div>
+                </a>
+                <a href="?section=arts">    
+                    <div class="admin-nav-btn" 
+                        {{if eq $section "arts"}}
+                            style="background-color: rgb(141, 141, 141);"
+                        {{end}}
+                    >    
+                        <p {{if eq $section "arts"}}
+                                style="color: white;"
+                            {{end}}
+                        >Произведения</p>
+                    </div>
+                </a>
+            </div>
+            <div id="admin-main-info">
+                <div id="admin-info-wrap">
+                    {{if or (eq $section "users") (eq $section "")}}
+                        {{template "admin-users" .}}
+                    {{end}}
+                    {{if eq $section "comments"}}
+                        {{template "admin-comments" .}}
+                    {{end}}    
+                    {{if eq $section "comments"}}
+                        {{template "admin-arts" .}}
+                    {{end}}
+                </div>
+            </div>
+        </div>
+    </div>
+{{template "footer.html"}}

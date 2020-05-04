@@ -1,0 +1,50 @@
+{{define "char-edit"}}
+<div class="item-control-panel">
+    <div class="char-edit control-btn-wrap">
+        <form class="char-edit-btn-form edit-btn-form" method="GET">
+            <input type="submit" class="item-control-button" value="Назад"/>
+        </form>
+    </div>
+</div>
+<form action="{{.ID}}/edit" method="POST" enctype="multipart/form-data" id="put-char-form" class="char-form">
+    <input type="hidden" name="location" value="."/>
+    <div class="char-text-info">
+        <div class="char-name">
+            <div class="char-name-title title-container">
+                <h3>Имя:</h3>
+            </div>
+            <div class="char-name-content char-content-container">
+                <input type="text" name="name" value="{{.Name}}" required>
+            </div>
+        </div>
+        <div class="char-about">
+            <div class="char-about-title title-container">
+                <h3>Характеристика:</h3>
+            </div>
+            <div class="char-about-edit char-content-container">
+                <Textarea form="put-char-form" id="ename" name="About" style="width: 100%; height: 100%;">{{.About}}</Textarea>
+            </div>
+        </div>
+    </div>
+    <div class="char-photo">
+        <input type="file" name="photo_file" accept="image/*">
+        <input type="hidden" name="photo" value="{{.Photo}}"/>
+        {{if .Photo}}
+            <img src="../../data/images/{{.Photo}}" alt="Фото не найдено" width="100%" height="100%">
+        {{end}}
+    </div>
+    <div class="char-excerpt-edit">
+        <div class="char-excerpt-edit-wrap">
+            <div class="char-excerpt-title title-container">
+                <h3>Отрывок:</h3>
+            </div>
+            <div class="char-excerpt-form-wrap char-content-container">
+                <Textarea form="put-char-form" id="ename" name="excerpt" style="width: 100%; height: 100%;">{{.Excerpt}}</Textarea>
+            </div>
+        </div>
+    </div>
+    <div class="save-item-edit-button-wrap">
+        <div><input type="submit" id="save" value="Сохранить"/></div>
+    </div>
+</form>
+{{end}}

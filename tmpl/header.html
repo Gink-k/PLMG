@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link href="/static/stylesheets/style.css" rel="stylesheet" type="text/css">
+		<script src="/static/javascript/base.js" type="text/javascript"></script>
+		<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
+	</head>
+	<body>
+		<div id="wrap">
+			<nav>
+				<div id="main-logo-container">
+					<div id="main-logo-wrap">
+						<h1 id="main-title">PLMG</h1>
+					</div>
+				</div>
+				<div id="nav-side-wrap">
+					<div id="menu-container">
+						<div id="characters-btn-wrap" class="menu-btns">
+							<h1><a href="/"><span>Персонажи</span></a></h1>
+						</div>
+					</div>
+					<div id="user-auth-container">
+						<div id="greeting-container">
+							<p>Приветствую, {{.user.Name}}!</p>
+							{{if not .user.IsLogged}}
+								<div id="user-auth-btn-wrap">
+									<div id="login-btn-wrap" class="auth-btn-wrap">
+										<button id="login-btn">Войти</button>
+									</div><div id="singup-btn-wrap" class="auth-btn-wrap">
+										<a id="singup-btn" href="/registration">Регистрация</a>
+									</div>
+								</div>
+							{{end}}
+							{{if .user.IsLogged}}
+								<div id="logout-form-container">
+									<form action="/logout" enctype="multipart/form-data" method="POST">
+										<input type="hidden" name="location" value=".." class="auth-from-location"/>
+										<input type="submit" class="item-control-button" value="Выйти"/>
+									</form>
+								</div>
+							{{end}}
+						</div>
+					</div>
+					{{if not .user.IsLogged}}
+						<div id="login-form-container" {{if .LoginWarning}}style="display:block;"{{end}}>
+							<div>
+								<form action="/login" enctype="multipart/form-data" method="POST">
+									<input type="hidden" name="location" value=".." class="auth-from-location"/>
+									<label for="l_email">Email:</label><br>
+									<input type="email" id="l_login" name="email"><br>
+									<label for="l_password">Password:</label><br>
+									<input type="password" id="l_password" name="password" minlength="6"><br>
+									<input type="submit" class="item-control-button" value="Войти"/>
+								</form>
+							</div>
+							{{if .LoginWarning}}
+								<div>
+									<p id="login-warning" class="warning-info">{{.LoginWarning}}</p>
+								</div>
+							{{end}}
+						</div>
+					{{end}}
+				</div>
+			</nav>
+			<div id="content_container">
+				<!-- <div id="back-btn-wrap">
+					<a href=".." class="btn-back"><- Назад</a>
+				</div> -->

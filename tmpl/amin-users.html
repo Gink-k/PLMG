@@ -1,0 +1,97 @@
+{{define "admin-users"}}
+    <table class="admin-info-table">
+        <tr class="admin-table-line">
+            <div id="admin-header-wrap" class="admin-line-wrap">
+                <td class="admin-cell admin-header">
+                    <div class="a-user-id"><p>ID</p></div>
+                </td>
+                <td class="admin-cell admin-header">
+                    <div class="a-user-name"><p>Name</p></div>
+                </td>
+                <td class="admin-cell admin-header">
+                    <div class="a-user-surname"><p>Surname</p></div>
+                </td>
+                <td class="admin-cell admin-header">
+                    <div class="a-user-email"><p>Email</p></div>
+                </td>
+                <td class="admin-cell admin-header">
+                    <div class="a-user-photo"><p>Photo</p></div>
+                </td>
+                <td class="admin-cell admin-header">
+                    <div class="a-user-group"><p>Group</p></div>
+                </td>
+                <td class="admin-cell admin-header">
+                    <div class="a-user-created-time"><p>CreatedAt</p></div>
+                </td>
+                <td class="admin-control-cell">
+                    <div class="a-control-panel"><p>Панель управления</p></div>
+                </td>
+            </div>
+        </tr>
+        {{range .accounts}}
+            <tr class="admin-table-line">
+                <div class="admin-line-wrap">
+                    <td class="admin-cell">
+                        <div class="a-user-id">
+                            <p>{{.ID}}</p>
+                        </div>
+                    </td>
+                    <td class="admin-cell">
+                        <div class="a-user-name">
+                            <p>{{.Name}}</p>
+                        </div>
+                    </td>
+                    <td class="admin-cell">
+                        <div class="a-user-surname">
+                            <p>{{.Surname}}</p>
+                        </div>
+                    </td>
+                    <td class="admin-cell">
+                        <div class="a-user-email">
+                            <p>{{.Email}}</p>
+                        </div>
+                    </td>
+                    <td class="admin-cell">
+                        <div class="a-user-photo">
+                            <p>{{.Photo}}</p>
+                        </div>
+                    </td>
+                    <td class="admin-cell">
+                        <div class="a-user-group">
+                            <p>{{.Group}}</p>
+                        </div>
+                    </td>
+                    <td class="admin-cell">
+                        <div class="a-user-created-time">
+                            <p>{{.CreatedAt}}</p>
+                        </div>
+                    </td>
+                    <td class="admin-control-cell">
+                        <div class="admin-control-panel item-control-panel">
+                            <div class="admin-edit control-btn-wrap">
+                                <form method="GET" class="admin-edit-btn-form edit-btn-form">
+                                    <input type="hidden" name="edit" value="true" />
+                                    <input type="submit" class="item-control-button" value="Редакт"/>
+                                </form>
+                            </div>
+                            <div class="admin-delete control-btn-wrap">
+                                <form method="POST">
+                                    <input type="hidden" name="action" value="delete"/>
+                                    <input type="hidden" name="id" value="{{.ID}}"/>
+                                    <input type="submit" class="item-control-button" value="Удалить"/>
+                                </form>
+                            </div>
+                            <div class="admin-delete control-btn-wrap">
+                                <form method="POST">
+                                    <input type="hidden" name="action" value="set-admin"/>
+                                    <input type="hidden" name="id" value="{{.ID}}"/>
+                                    <input type="submit" class="item-control-button" value="Назн админ."/>
+                                </form>
+                            </div>
+                        </div>
+                    </td>
+                </div>
+            </tr>
+        {{end}}
+    </table>
+{{end}}

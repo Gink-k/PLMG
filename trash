@@ -1,0 +1,35 @@
+ &{0xc000283cc0 <nil> <nil> false true {0 0} true false false 0x6e23f0}
+2020/03/28 11:40:12 map[
+Accept:[text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9] 
+Accept-Encoding:[gzip, deflate, br] 
+Accept-Language:[ru-RU,ru;q=0.9,en-US;q=0.8,en;q=0.7] 
+Cache-Control:[max-age=0] Connection:[keep-alive] 
+Content-Length:[485] 
+Content-Type:[multipart/form-data; boundary=----WebKitFormBoundarynK3d9PUNZnUgGru8] 
+Cookie:[csrftoken=mouboUvbQFNiBPCFMz65Xt1dYPdpGyuMffdJVUVneZqTohDDiCEO2pRk8ahuo01h] 
+Origin:[http://localhost:8000] 
+Referer:[http://localhost:8000/characters] 
+Sec-Fetch-Dest:[document] 
+Sec-Fetch-Mode:[navigate] 
+Sec-Fetch-Site:[same-origin] 
+Sec-Fetch-User:[?1] 
+Upgrade-Insecure-Requests:[1] 
+User-Agent:[Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Safari/537.36]]
+
+-----------------------
+
+&{0xc0003bb060 <nil> <nil> false true {0 0} true false false 0x6e23f0}
+2020/03/28 11:41:42 map[
+Accept:[*/*] Accept-Encoding:[gzip, deflate, br] 
+Accept-Language:[ru-RU,ru;q=0.9,en-US;q=0.8,en;q=0.7] 
+Connection:[keep-alive] 
+Content-Length:[664] 
+Content-Type:[multipart/form-data; boundary=----WebKitFormBoundaryN2BHm97WKNvUVfkE] 
+Cookie:[csrftoken=mouboUvbQFNiBPCFMz65Xt1dYPdpGyuMffdJVUVneZqTohDDiCEO2pRk8ahuo01h] 
+Origin:[http://localhost:8000] 
+Referer:[http://localhost:8000/characters/31?edit=true] 
+Sec-Fetch-Dest:[empty] Sec-Fetch-Mode:[cors] 
+Sec-Fetch-Site:[same-origin] 
+User-Agent:[Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Safari/537.36]]
+
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySWQiOjF9.w3DibIMbmrnK164FFQtJA3DSQWxrZUNul_uNmO0y9Ic

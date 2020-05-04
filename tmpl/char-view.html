@@ -1,0 +1,48 @@
+{{define "char-view"}}
+<div class="item-control-panel">
+    {{if .user.IsAdmin}}
+        <div class="char-edit control-btn-wrap">
+            <form method="GET" class="char-edit-btn-form edit-btn-form">
+                <input type="hidden" name="edit" value="true" />
+                <input type="submit" class="item-control-button" value="Редактировать"/>
+            </form>
+        </div>
+        <div class="char-delete control-btn-wrap">
+            <form method="POST">
+                <input type="hidden" name="location" value="."/>
+                <input type="submit" class="item-control-button" value="Удалить"/>
+            </form>
+        </div>
+    {{end}}
+</div>
+<div class="char-text-info">
+    <div class="char-name">
+        <div class="char-name-title title-container">
+            <h3>Имя:</h3>
+        </div>
+        <div class="char-name-content char-content-container">
+            <p>{{ .character.Name }}</p>
+        </div>
+    </div>
+    <div class="char-about">
+        <div class="char-about-title title-container">
+            <h3>Характеристика:</h3>
+        </div>
+        <div class="char-about-content char-content-container">
+            <p>{{ .character.About }}</p>
+        </div>
+    </div>
+</div>
+<div class="char-photo"><img src="../../data/images/{{.character.Photo}}" alt="Фото не найдено" width="100%" height="100%"></div><br>
+<div class="char-excerpt">
+    <div class="char-excerpt-title title-container">
+        <h3>Отрывок:</h3>
+    </div>
+    <div class="char-excerpt-content char-content-container">
+        <p>{{ .character.Excerpt }}</p>
+    </div>
+</div>
+<div class="char-button-read">
+    <div><a href="../characters/{{.character.ID}}/histories" class="itemlink">Читать...</a></div>
+</div>
+{{end}}
