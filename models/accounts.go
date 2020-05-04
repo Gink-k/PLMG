@@ -2,7 +2,6 @@ package models
 
 import (
 	"fmt"
-	"log"
 	"os"
 	u "plmg/utils"
 	"strings"
@@ -139,8 +138,6 @@ func Login(email, password string) map[string]interface{} {
 		}
 		return u.Message(u.ERROR, "Connection error. Please retry")
 	}
-
-	log.Println(password, email)
 	err = bcrypt.CompareHashAndPassword([]byte(account.Password), []byte(password))
 	if err != nil && err == bcrypt.ErrMismatchedHashAndPassword { //Пароль не совпадает!!
 		return u.Message(u.WARNING, "Invalid login credentials. Please try again")

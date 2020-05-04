@@ -2,7 +2,6 @@ package response
 
 import (
 	"fmt"
-	"log"
 	"net/http"
 	"plmg/models"
 	u "plmg/utils"
@@ -58,7 +57,6 @@ var CreateHistory = func(w http.ResponseWriter, r *http.Request) map[string]inte
 	if err != nil {
 		return u.Message(u.ERROR, "Invalid character's id")
 	}
-	log.Println(char_id)
 	history := &models.History{CharacterID: char_id}
 	if err = decodeRequest(w, r, history); err != nil {
 		return u.Message(u.ERROR, "Invalid request")

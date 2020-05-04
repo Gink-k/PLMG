@@ -101,7 +101,6 @@ func AdminPageHandler(w http.ResponseWriter, r *http.Request) {
 	if user.IsAdmin() {
 		if r.Method == "POST" {
 			action := r.FormValue("action")
-			log.Println(action)
 			switch action {
 			case "edit":
 				response = rawContr.EditAccount(w, r)
