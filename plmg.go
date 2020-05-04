@@ -3,6 +3,7 @@ package main
 import (
 	"log"
 	"net/http"
+	"os"
 	"plmg/app"
 	"plmg/controllers/api"
 	contr "plmg/controllers/response"
@@ -63,6 +64,5 @@ func main() {
 
 	r.Use(app.WebJwtAuth)
 	//r.Use(app.JwtAuthentication)
-
-	log.Fatal(http.ListenAndServe(":8080", r))
+	log.Fatal(http.ListenAndServe(os.Getenv("PORT"), r))
 }
