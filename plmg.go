@@ -64,5 +64,5 @@ func main() {
 	r.Use(app.WebJwtAuth)
 	//r.Use(app.JwtAuthentication)
 
-	log.Fatal(http.ListenAndServe(":8000", r))
+	log.Fatal(http.ListenAndServe(":8080", r))
 }
