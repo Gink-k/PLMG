@@ -12,9 +12,9 @@
             {{range .chapters}}
                 {{$index = inc $index}}
                 {{if or (eq $edit "") (ne $edit .Title)}}
-                    {{template "chap-view" dict "index" $index "chapter" .}}
+                    {{template "chap-view" dict "index" $index "chapter" . "user" $.user}}
                 {{else}}
-                    {{template "chap-edit" dict "index" $index "chapter" .}}
+                    {{template "chap-edit" dict "index" $index "chapter" . "user" $.user}}
                 {{end}}
             {{else}}
 
