@@ -64,5 +64,6 @@ func main() {
 
 	r.Use(app.WebJwtAuth)
 	//r.Use(app.JwtAuthentication)
-	log.Fatal(http.ListenAndServe(os.Getenv("PORT"), r))
+	port := ":" + os.Getenv("PORT")
+	log.Fatal(http.ListenAndServe(port, r))
 }
