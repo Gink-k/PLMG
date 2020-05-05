@@ -18,6 +18,15 @@ body > #wrap {height: auto; min-height: 100%;}
 	font-family: 'Montserrat Alternates', sans-serif;
 }
 
+ul {
+	list-style: none;
+	padding: 0px;	
+}
+
+p, label, a {
+	color: rgb(168, 167, 167);
+}
+
 nav {
 	height:	80px;
 	opacity: 90%;
@@ -212,15 +221,6 @@ footer .container.copyright {
 
 footer .container.copyright a {
 	text-decoration: none;
-}
-
-ul {
-	list-style: none;
-	padding: 0px;	
-}
-
-p, label, a {
-	color: rgb(168, 167, 167);
 }
 
 .text_container {
@@ -472,7 +472,7 @@ p, label, a {
 	margin-bottom: 15px;
 	background-color: rgb(180, 180, 180);
 	padding: 4px;
-	font-size: 1.1vw;
+	font-size: 19px;
 }
 
 .char-content-container {

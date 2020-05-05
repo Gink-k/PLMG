@@ -2,20 +2,22 @@
     <div class="chap-unit-wrap" id="{{ .chapter.ID }}">
         <div class="chap-content-wrap">
                 <div class="chap-title-block">
-                    <div class="item-control-panel">                             
-                        <div class="chap-edit-btn-wrap control-btn-wrap">
-                            <form method="GET" class="chap-edit-btn-form edit-btn-form">
-                                <input type="hidden" name="edit" value="{{ .chapter.Title }}" />
-                                <input type="submit" class="chap-edit-btn item-control-button" value="Ред."/>
-                            </form>
+                    {{if .user.IsAdmin}}
+                        <div class="item-control-panel">                             
+                            <div class="chap-edit-btn-wrap control-btn-wrap">
+                                <form method="GET" class="chap-edit-btn-form edit-btn-form">
+                                    <input type="hidden" name="edit" value="{{ .chapter.Title }}" />
+                                    <input type="submit" class="chap-edit-btn item-control-button" value="Ред."/>
+                                </form>
+                            </div>
+                            <div class="chap-delete-btn-wrap control-btn-wrap">
+                                <form action="chapters/{{ .chapter.ID }}" method="POST">
+                                    <input type="hidden" name="location" value="."/>
+                                    <input type="submit" class="item-control-button" value="Удалить"/>
+                                </form>
+                            </div>
                         </div>
-                        <div class="chap-delete-btn-wrap control-btn-wrap">
-                            <form action="chapters/{{ .chapter.ID }}" method="POST">
-                                <input type="hidden" name="location" value="."/>
-                                <input type="submit" class="item-control-button" value="Удалить"/>
-                            </form>
-                        </div>
-                    </div>
+                    {{end}}    
                     <div class="chap-title-wrap">
                         <p>
                             <span class="chap-index"> Глава {{ .index }}:</span>
