@@ -50,14 +50,14 @@ func decodeFormPhoto(r *http.Request, model models.PlmgObject) {
 		defer file.Close()
 		i := strings.LastIndex(handler.Filename, ".")
 		extension := handler.Filename[i+1:]
-		photoName := model.BuildPhotoName(extension)
+		photoName := model.BuildPhotoName(extension) // how to build photo name if model.ID == 0 (new empty model)
 		fileName, err := filepath.Abs("data/images/" + photoName)
 
 		if err == nil {
 			f, err := os.OpenFile(fileName, os.O_WRONLY|os.O_CREATE, 0666)
 			if err == nil {
 				defer f.Close()
-				model.SavePhotoName(photoName)
+				model.SavePhotoName(photoName) // save same name
 				io.Copy(f, file)
 			}
 		}
