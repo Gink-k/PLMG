@@ -57,7 +57,7 @@ func decodeFormPhoto(r *http.Request, model models.PlmgObject) {
 			f, err := os.OpenFile(fileName, os.O_WRONLY|os.O_CREATE, 0666)
 			if err == nil {
 				defer f.Close()
-				model.SavePhotoName(photoName)
+				model.SavePhotoName(photoName) // save with same name
 				io.Copy(f, file)
 			}
 		}
