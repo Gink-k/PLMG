@@ -38,8 +38,8 @@ var ViewChapter = func(w http.ResponseWriter, r *http.Request) map[string]interf
 		return notExMsg(ITEM_CHAPTER)
 	}
 	resp := u.Message(u.SUCCESS, "Chapter has been gotten")
-	resp["chapter"] = chapter
-	resp["item"] = "chapter"
+	resp[ITEM_CHAPTER] = chapter
+	resp["item"] = ITEM_CHAPTER
 	return resp
 }
 
@@ -52,11 +52,11 @@ var EditChapter = func(w http.ResponseWriter, r *http.Request) map[string]interf
 	if chapter.ID == 0 {
 		return notExMsg(ITEM_CHAPTER)
 	}
-	if err = decodeRequest(w, r, chapter); err != nil {
+	if err = decodeRequest(r, chapter); err != nil {
 		return u.Message(u.ERROR, "Invalid request")
 	}
 	resp := chapter.Edit() //Обновить историю
-	resp["item"] = "chapter"
+	resp["item"] = ITEM_CHAPTER
 	return resp
 }
 
@@ -76,11 +76,11 @@ var CreateChapter = func(w http.ResponseWriter, r *http.Request) map[string]inte
 		CharacterID: char_id,
 	}
 
-	if err = decodeRequest(w, r, chapter); err != nil {
+	if err = decodeRequest(r, chapter); err != nil {
 		return u.Message(u.ERROR, "Invalid request")
 	}
 	resp := chapter.Create() //Создать персонажа
-	resp["item"] = "chapter"
+	resp["item"] = ITEM_CHAPTER
 	return resp
 }
 
@@ -98,7 +98,7 @@ var DeleteChapter = func(w http.ResponseWriter, r *http.Request) map[string]inte
 		return nil
 	}
 	resp = chapter.Delete() //Удалить персонажа
-	resp["item"] = "chapter"
+	resp["item"] = ITEM_CHAPTER
 	return resp
 }
 
@@ -110,8 +110,9 @@ var GetAllChapters = func(w http.ResponseWriter, r *http.Request) map[string]int
 	chapters := models.GetAllChapBy(char_id, hist_id)
 	history := models.GetHistory(hist_id, char_id)
 	resp := u.Message(u.SUCCESS, "Chapters has been gotten")
-	resp["chapters"] = chapters
+	item_name := ITEM_CHAPTER + "s"
+	resp[item_name] = chapters
 	resp["history"] = history
-	resp["item"] = "chapters"
+	resp["item"] = item_name
 	return resp
 }

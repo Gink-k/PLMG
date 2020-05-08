@@ -26,36 +26,14 @@ func convertMap(form map[string][]string) map[string]string {
 	return map_model
 }
 
-func decodeRequest(w http.ResponseWriter, r *http.Request, model models.PlmgObject) error {
+func decodeRequest(r *http.Request, model models.PlmgObject) error {
 	if r.Header.Get("Content-Type") != "" {
 		value, _ := header.ParseValueAndParams(r.Header, "Content-Type")
 		if value != "application/json" {
-			r.ParseMultipartForm(2 << 20)
 			modForm := convertMap(r.Form)
 			// decode form to model
 			decode_error := mapstructure.Decode(modForm, model)
-
-			file, handler, err := r.FormFile("photo_file")
-
-			if err == nil {
-				defer file.Close()
-				i := strings.LastIndex(handler.Filename, ".")
-				extension := handler.Filename[i+1:]
-				photoName := model.BuildPhotoName(extension)
-				fileName, err := filepath.Abs("data/images/" + photoName)
-
-				if err == nil {
-					f, err := os.OpenFile(fileName, os.O_WRONLY|os.O_CREATE, 0666)
-					if err == nil {
-						defer f.Close()
-						model.SavePhotoName(photoName)
-						io.Copy(f, file)
-					}
-				}
-			}
-			if err != nil {
-				log.Println(err.Error())
-			}
+			decodeFormPhoto(r, model)
 			return decode_error
 		} else {
 			return json.NewDecoder(r.Body).Decode(model)
@@ -63,6 +41,30 @@ func decodeRequest(w http.ResponseWriter, r *http.Request, model models.PlmgObje
 	}
 	msg := "Content-Type header is not application/json"
 	return errors.New(msg)
+}
+
+func decodeFormPhoto(r *http.Request, model models.PlmgObject) {
+	r.ParseMultipartForm(2 << 20)
+	file, handler, err := r.FormFile("photo_file")
+	if err == nil {
+		defer file.Close()
+		i := strings.LastIndex(handler.Filename, ".")
+		extension := handler.Filename[i+1:]
+		photoName := model.BuildPhotoName(extension)
+		fileName, err := filepath.Abs("data/images/" + photoName)
+
+		if err == nil {
+			f, err := os.OpenFile(fileName, os.O_WRONLY|os.O_CREATE, 0666)
+			if err == nil {
+				defer f.Close()
+				model.SavePhotoName(photoName)
+				io.Copy(f, file)
+			}
+		}
+	}
+	if err != nil {
+		log.Println(err.Error())
+	}
 }
 
 func getPathParams(r *http.Request) map[string]string {

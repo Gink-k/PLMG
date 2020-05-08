@@ -11,7 +11,7 @@ const ITEM_ACCOUNT string = "account"
 
 var CreateAccount = func(w http.ResponseWriter, r *http.Request) map[string]interface{} {
 	account := &models.Account{}
-	err := decodeRequest(w, r, account) //декодирует тело запроса в struct и завершается неудачно в случае ошибки
+	err := decodeRequest(r, account) //декодирует тело запроса в struct и завершается неудачно в случае ошибки
 	if err != nil {
 		return u.Message(u.ERROR, "Invalid request")
 	}
@@ -30,7 +30,7 @@ var EditAccount = func(w http.ResponseWriter, r *http.Request) map[string]interf
 		return u.Message(u.ERROR, "Invalid user id")
 	}
 	account := models.GetUser(id)
-	err = decodeRequest(w, r, account)
+	err = decodeRequest(r, account)
 	if err != nil {
 		return u.Message(u.ERROR, "Invalid request")
 	}
@@ -52,7 +52,7 @@ var DeleteAccount = func(w http.ResponseWriter, r *http.Request) map[string]inte
 
 var Authenticate = func(w http.ResponseWriter, r *http.Request) map[string]interface{} {
 	account := &models.Account{}
-	err := decodeRequest(w, r, account) //декодирует тело запроса в struct и завершается неудачно в случае ошибки
+	err := decodeRequest(r, account) //декодирует тело запроса в struct и завершается неудачно в случае ошибки
 	if err != nil {
 		return u.Message(u.ERROR, "Invalid request")
 	}
@@ -76,7 +76,7 @@ var SetUserAsAdmin = func(w http.ResponseWriter, r *http.Request) map[string]int
 		return u.Message(u.ERROR, "Invalid user id")
 	}
 	account := models.GetUser(id)
-	err = decodeRequest(w, r, account) //декодирует тело запроса в struct и завершается неудачно в случае ошибки
+	err = decodeRequest(r, account) //декодирует тело запроса в struct и завершается неудачно в случае ошибки
 	if err != nil {
 		return u.Message(u.ERROR, "Invalid request")
 	}

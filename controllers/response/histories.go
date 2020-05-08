@@ -30,7 +30,7 @@ var ViewHistory = func(w http.ResponseWriter, r *http.Request) map[string]interf
 		return notExMsg(ITEM_HISTORY)
 	}
 	resp := u.Message(u.SUCCESS, "History has been gotten")
-	resp["history"] = history
+	resp[ITEM_HISTORY] = history
 	resp["item"] = ITEM_HISTORY
 	return resp
 }
@@ -44,7 +44,7 @@ var EditHistory = func(w http.ResponseWriter, r *http.Request) map[string]interf
 	if history.ID == 0 {
 		return notExMsg(ITEM_HISTORY)
 	}
-	if err = decodeRequest(w, r, history); err != nil {
+	if err = decodeRequest(r, history); err != nil {
 		return u.Message(u.ERROR, "Invalid request")
 	}
 	resp := history.Edit() //Обновить историю
@@ -58,7 +58,7 @@ var CreateHistory = func(w http.ResponseWriter, r *http.Request) map[string]inte
 		return u.Message(u.ERROR, "Invalid character's id")
 	}
 	history := &models.History{CharacterID: char_id}
-	if err = decodeRequest(w, r, history); err != nil {
+	if err = decodeRequest(r, history); err != nil {
 		return u.Message(u.ERROR, "Invalid request")
 	}
 

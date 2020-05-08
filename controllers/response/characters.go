@@ -18,14 +18,14 @@ var ViewCharacter = func(w http.ResponseWriter, r *http.Request) map[string]inte
 	}
 
 	resp = u.Message(u.SUCCESS, "Character has been gotten")
-	resp["character"] = character
+	resp[ITEM_CHARACTER] = character
 	resp["item"] = ITEM_CHARACTER
 	return resp
 }
 
 var CreateCharacter = func(w http.ResponseWriter, r *http.Request) map[string]interface{} {
 	character := &models.Character{}
-	if err := decodeRequest(w, r, character); err != nil {
+	if err := decodeRequest(r, character); err != nil {
 		return u.Message(u.ERROR, "Invalid request")
 	}
 	resp := character.Create() //Создать персонажа
@@ -41,7 +41,7 @@ var EditCharacter = func(w http.ResponseWriter, r *http.Request) map[string]inte
 		return notExMsg(ITEM_CHARACTER)
 	}
 
-	if err := decodeRequest(w, r, character); err != nil {
+	if err := decodeRequest(r, character); err != nil {
 		return u.Message(u.ERROR, "Invalid request")
 	}
 	resp = character.Edit() //Обновить персонажа
@@ -65,7 +65,8 @@ var DeleteCharacter = func(w http.ResponseWriter, r *http.Request) map[string]in
 var GetAllCharacters = func(w http.ResponseWriter, r *http.Request) map[string]interface{} {
 	characters := models.GetAllCharacters()
 	resp := u.Message(u.SUCCESS, "Characters has been gotten")
-	resp["characters"] = characters
-	resp["item"] = ITEM_CHARACTER + "s"
+	item_name := ITEM_CHARACTER + "s"
+	resp[item_name] = characters
+	resp["item"] = item_name
 	return resp
 }
