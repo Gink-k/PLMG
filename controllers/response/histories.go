@@ -47,6 +47,9 @@ var EditHistory = func(w http.ResponseWriter, r *http.Request) map[string]interf
 	if err = decodeRequest(r, history); err != nil {
 		return u.Message(u.ERROR, "Invalid request")
 	}
+	//
+	decodeFormPhoto(r, history)
+	//
 	resp := history.Edit() //Обновить историю
 	resp["item"] = ITEM_HISTORY
 	return resp
@@ -63,6 +66,10 @@ var CreateHistory = func(w http.ResponseWriter, r *http.Request) map[string]inte
 	}
 
 	resp := history.Create() //Создать персонажа
+	//
+	decodeFormPhoto(r, history)
+	history.SavePhotoName()
+	//
 	resp["item"] = ITEM_HISTORY
 	return resp
 }

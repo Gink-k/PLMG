@@ -57,8 +57,12 @@ func (chapter *Chapter) BuildPhotoName(extension string) string {
 	)
 }
 
-func (chapter *Chapter) SavePhotoName(photoName string) {
+func (chapter *Chapter) SetPhotoName(photoName string) {
 	chapter.Photo = photoName
+}
+
+func (chapter *Chapter) SavePhotoName() {
+	chapter.Edit()
 }
 
 func GetChapter(id string, hist_id string, char_id string) *Chapter {

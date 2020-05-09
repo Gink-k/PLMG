@@ -120,8 +120,12 @@ func (account *Account) BuildPhotoName(extension string) string {
 	)
 }
 
-func (account *Account) SavePhotoName(photoName string) {
+func (account *Account) SetPhotoName(photoName string) {
 	account.Photo = photoName
+}
+
+func (account *Account) SavePhotoName() {
+	account.Edit()
 }
 
 func (account *Account) IsAdmin() bool {

@@ -58,8 +58,12 @@ func (character *Character) BuildPhotoName(extension string) string {
 	)
 }
 
-func (character *Character) SavePhotoName(photoName string) {
+func (character *Character) SetPhotoName(photoName string) {
 	character.Photo = photoName
+}
+
+func (character *Character) SavePhotoName() {
+	character.Edit()
 }
 
 func (character *Character) deletePhoto() {

@@ -14,17 +14,13 @@ type PlmgObject interface {
 	Delete() map[string]interface{}
 	GetID() uint
 	BuildPhotoName(extension string) string
-	SavePhotoName(photoName string)
+	SetPhotoName(photoName string)
+	SavePhotoName()
 }
 
 type LitItem struct {
 	gorm.Model
 	Photo string `json:"photo"`
-}
-
-func getSupposedID(model PlmgObject) uint {
-	GetDB().Save(model)
-	return model.GetID()
 }
 
 func removePhoto(photoName string) {

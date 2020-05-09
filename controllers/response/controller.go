@@ -34,7 +34,6 @@ func decodeRequest(r *http.Request, model models.PlmgObject) error {
 			modForm := convertMap(r.Form)
 			// decode form to model
 			decode_error := mapstructure.Decode(modForm, model)
-			decodeFormPhoto(r, model)
 			return decode_error
 		} else {
 			return json.NewDecoder(r.Body).Decode(model)
@@ -57,7 +56,7 @@ func decodeFormPhoto(r *http.Request, model models.PlmgObject) {
 			f, err := os.OpenFile(fileName, os.O_WRONLY|os.O_CREATE, 0666)
 			if err == nil {
 				defer f.Close()
-				model.SavePhotoName(photoName) // save with same name
+				model.SetPhotoName(photoName) // save with same name
 				io.Copy(f, file)
 			}
 		}

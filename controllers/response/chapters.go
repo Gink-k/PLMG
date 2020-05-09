@@ -55,6 +55,9 @@ var EditChapter = func(w http.ResponseWriter, r *http.Request) map[string]interf
 	if err = decodeRequest(r, chapter); err != nil {
 		return u.Message(u.ERROR, "Invalid request")
 	}
+	//
+	decodeFormPhoto(r, chapter)
+	//
 	resp := chapter.Edit() //Обновить историю
 	resp["item"] = ITEM_CHAPTER
 	return resp
@@ -80,6 +83,10 @@ var CreateChapter = func(w http.ResponseWriter, r *http.Request) map[string]inte
 		return u.Message(u.ERROR, "Invalid request")
 	}
 	resp := chapter.Create() //Создать персонажа
+	//
+	decodeFormPhoto(r, chapter)
+	chapter.SavePhotoName()
+	//
 	resp["item"] = ITEM_CHAPTER
 	return resp
 }

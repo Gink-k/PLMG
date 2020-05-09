@@ -20,6 +20,10 @@ var CreateAccount = func(w http.ResponseWriter, r *http.Request) map[string]inte
 		return u.Message(u.WARNING, "Password mismatch")
 	}
 	resp := account.Create() //Создать аккаунт
+	//
+	decodeFormPhoto(r, account)
+	account.SavePhotoName()
+	//
 	resp["item"] = ITEM_ACCOUNT
 	return resp
 }
@@ -34,6 +38,9 @@ var EditAccount = func(w http.ResponseWriter, r *http.Request) map[string]interf
 	if err != nil {
 		return u.Message(u.ERROR, "Invalid request")
 	}
+	//
+	decodeFormPhoto(r, account)
+	//
 	resp := account.Edit() //Удалить персонажа
 	resp["item"] = ITEM_ACCOUNT
 	return resp

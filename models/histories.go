@@ -58,8 +58,12 @@ func (history *History) BuildPhotoName(extension string) string {
 	)
 }
 
-func (history *History) SavePhotoName(photoName string) {
+func (history *History) SetPhotoName(photoName string) {
 	history.Photo = photoName
+}
+
+func (history *History) SavePhotoName() {
+	history.Edit()
 }
 
 func GetHistory(hist_id string, char_id string) *History {
