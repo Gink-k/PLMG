@@ -110,6 +110,10 @@ func (account *Account) Delete() map[string]interface{} {
 	return response
 }
 
+func (account *Account) GetID() uint {
+	return account.ID
+}
+
 func (account *Account) BuildPhotoName(extension string) string {
 	return fmt.Sprintf(
 		"account_photo%d.%s", account.ID, extension,

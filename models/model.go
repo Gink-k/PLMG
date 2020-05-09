@@ -10,8 +10,9 @@ import (
 
 type PlmgObject interface {
 	Create() map[string]interface{}
-	// Edit() map[string]interface{}
-	// Delete() map[string]interface{}
+	Edit() map[string]interface{}
+	Delete() map[string]interface{}
+	GetID() uint
 	BuildPhotoName(extension string) string
 	SavePhotoName(photoName string)
 }
@@ -19,6 +20,11 @@ type PlmgObject interface {
 type LitItem struct {
 	gorm.Model
 	Photo string `json:"photo"`
+}
+
+func getSupposedID(model PlmgObject) {
+	GetDB().Save(model)
+
 }
 
 func removePhoto(photoName string) {

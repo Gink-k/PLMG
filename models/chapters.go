@@ -43,6 +43,10 @@ func (chapter *Chapter) Delete() map[string]interface{} {
 	return response
 }
 
+func (chapter *Chapter) GetID() uint {
+	return chapter.ID
+}
+
 func (chapter *Chapter) BuildPhotoName(extension string) string {
 	return fmt.Sprintf(
 		"chapter_photo%d_%d_%d.%s",

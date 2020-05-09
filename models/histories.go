@@ -45,6 +45,10 @@ func (history *History) Delete() map[string]interface{} {
 	return response
 }
 
+func (history *History) GetID() uint {
+	return history.ID
+}
+
 func (history *History) BuildPhotoName(extension string) string {
 	return fmt.Sprintf(
 		"history_photo%d_%d.%s",

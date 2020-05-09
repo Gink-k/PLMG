@@ -46,6 +46,10 @@ func (character *Character) Delete() map[string]interface{} {
 	return response
 }
 
+func (character *Character) GetID() uint {
+	return character.ID
+}
+
 func (character *Character) BuildPhotoName(extension string) string {
 	return fmt.Sprintf(
 		"character_photo%d.%s",
