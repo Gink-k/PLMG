@@ -30,6 +30,7 @@ func decodeRequest(r *http.Request, model models.PlmgObject) error {
 	if r.Header.Get("Content-Type") != "" {
 		value, _ := header.ParseValueAndParams(r.Header, "Content-Type")
 		if value != "application/json" {
+			r.ParseMultipartForm(2 << 20)
 			modForm := convertMap(r.Form)
 			// decode form to model
 			decode_error := mapstructure.Decode(modForm, model)
@@ -44,7 +45,6 @@ func decodeRequest(r *http.Request, model models.PlmgObject) error {
 }
 
 func decodeFormPhoto(r *http.Request, model models.PlmgObject) {
-	r.ParseMultipartForm(2 << 20)
 	file, handler, err := r.FormFile("photo_file")
 	if err == nil {
 		defer file.Close()

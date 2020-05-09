@@ -25,6 +25,7 @@ var ViewCharacter = func(w http.ResponseWriter, r *http.Request) map[string]inte
 
 var CreateCharacter = func(w http.ResponseWriter, r *http.Request) map[string]interface{} {
 	character := &models.Character{}
+	character.ID = character.GetID()
 	if err := decodeRequest(r, character); err != nil {
 		return u.Message(u.ERROR, "Invalid request")
 	}

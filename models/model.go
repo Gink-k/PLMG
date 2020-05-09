@@ -22,9 +22,9 @@ type LitItem struct {
 	Photo string `json:"photo"`
 }
 
-func getSupposedID(model PlmgObject) {
+func getSupposedID(model PlmgObject) uint {
 	GetDB().Save(model)
-
+	return model.GetID()
 }
 
 func removePhoto(photoName string) {
