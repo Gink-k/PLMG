@@ -13,7 +13,7 @@ var CreateAccount = func(w http.ResponseWriter, r *http.Request) map[string]inte
 	account := &models.Account{}
 	err := decodeRequest(r, account) //декодирует тело запроса в struct и завершается неудачно в случае ошибки
 	if err != nil {
-		return u.Message(u.ERROR, "Invalid request")
+		return invalidRequestMsg()
 	}
 	r_password := r.FormValue("r_password")
 	if r_password != account.Password {
@@ -36,7 +36,7 @@ var EditAccount = func(w http.ResponseWriter, r *http.Request) map[string]interf
 	account := models.GetUser(id)
 	err = decodeRequest(r, account)
 	if err != nil {
-		return u.Message(u.ERROR, "Invalid request")
+		return invalidRequestMsg()
 	}
 	//
 	decodeFormPhoto(r, account)
@@ -61,7 +61,7 @@ var Authenticate = func(w http.ResponseWriter, r *http.Request) map[string]inter
 	account := &models.Account{}
 	err := decodeRequest(r, account) //декодирует тело запроса в struct и завершается неудачно в случае ошибки
 	if err != nil {
-		return u.Message(u.ERROR, "Invalid request")
+		return invalidRequestMsg()
 	}
 	resp := models.Login(account.Email, account.Password)
 	resp["item"] = ITEM_ACCOUNT
@@ -85,7 +85,7 @@ var SetUserAsAdmin = func(w http.ResponseWriter, r *http.Request) map[string]int
 	account := models.GetUser(id)
 	err = decodeRequest(r, account) //декодирует тело запроса в struct и завершается неудачно в случае ошибки
 	if err != nil {
-		return u.Message(u.ERROR, "Invalid request")
+		return invalidRequestMsg()
 	}
 	account.Group = models.ADMIN
 	resp := account.Edit()

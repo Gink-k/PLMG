@@ -100,3 +100,7 @@ func histExist(hist_id string, char_id string) error {
 func notExMsg(itemName string) map[string]interface{} {
 	return u.Message(u.ERROR, "Invalid request: "+itemName+" doesn't exists")
 }
+
+func invalidRequestMsg() map[string]interface{} {
+	return invalidRequestMsg()
+}

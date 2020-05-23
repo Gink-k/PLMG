@@ -23,7 +23,7 @@ const ITEM_HISTORY = "history"
 var ViewHistory = func(w http.ResponseWriter, r *http.Request) map[string]interface{} {
 	hist_id, char_id, err := getHistoryIdentif(w, r)
 	if err != nil {
-		return u.Message(u.ERROR, "Invalid request")
+		return invalidRequestMsg()
 	}
 	history := models.GetHistory(hist_id, char_id)
 	if history.ID == 0 {
@@ -38,14 +38,14 @@ var ViewHistory = func(w http.ResponseWriter, r *http.Request) map[string]interf
 var EditHistory = func(w http.ResponseWriter, r *http.Request) map[string]interface{} {
 	hist_id, char_id, err := getHistoryIdentif(w, r)
 	if err != nil {
-		return u.Message(u.ERROR, "Invalid request")
+		return invalidRequestMsg()
 	}
 	history := models.GetHistory(hist_id, char_id)
 	if history.ID == 0 {
 		return notExMsg(ITEM_HISTORY)
 	}
 	if err = decodeRequest(r, history); err != nil {
-		return u.Message(u.ERROR, "Invalid request")
+		return invalidRequestMsg()
 	}
 	//
 	decodeFormPhoto(r, history)
@@ -62,7 +62,7 @@ var CreateHistory = func(w http.ResponseWriter, r *http.Request) map[string]inte
 	}
 	history := &models.History{CharacterID: char_id}
 	if err = decodeRequest(r, history); err != nil {
-		return u.Message(u.ERROR, "Invalid request")
+		return invalidRequestMsg()
 	}
 
 	resp := history.Create() //Создать персонажа
@@ -77,14 +77,14 @@ var CreateHistory = func(w http.ResponseWriter, r *http.Request) map[string]inte
 var DeleteHistory = func(w http.ResponseWriter, r *http.Request) map[string]interface{} {
 	hist_id, char_id, err := getHistoryIdentif(w, r)
 	if err != nil {
-		return u.Message(u.ERROR, "Invalid request")
+		return invalidRequestMsg()
 	}
 
 	var resp map[string]interface{}
 	history := models.GetHistory(hist_id, char_id)
 
 	if history.ID == 0 {
-		return u.Message(u.ERROR, "Invalid request: History doesn't exists")
+		return notExMsg(ITEM_HISTORY)
 	}
 
 	resp = history.Delete() //Удалить историю

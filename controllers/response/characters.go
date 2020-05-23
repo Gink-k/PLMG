@@ -23,20 +23,6 @@ var ViewCharacter = func(w http.ResponseWriter, r *http.Request) map[string]inte
 	return resp
 }
 
-var CreateCharacter = func(w http.ResponseWriter, r *http.Request) map[string]interface{} {
-	character := &models.Character{}
-	if err := decodeRequest(r, character); err != nil {
-		return u.Message(u.ERROR, "Invalid request")
-	}
-	resp := character.Create() //Создать персонажа
-	//
-	decodeFormPhoto(r, character)
-	character.SavePhotoName()
-	//
-	resp["item"] = ITEM_CHARACTER
-	return resp
-}
-
 var EditCharacter = func(w http.ResponseWriter, r *http.Request) map[string]interface{} {
 	character := models.GetCharacter(getPathParams(r)["id"])
 	var resp map[string]interface{}
@@ -46,12 +32,26 @@ var EditCharacter = func(w http.ResponseWriter, r *http.Request) map[string]inte
 	}
 
 	if err := decodeRequest(r, character); err != nil {
-		return u.Message(u.ERROR, "Invalid request")
+		return invalidRequestMsg()
 	}
 	//
 	decodeFormPhoto(r, character)
 	//
 	resp = character.Edit() //Обновить персонажа
+	resp["item"] = ITEM_CHARACTER
+	return resp
+}
+
+var CreateCharacter = func(w http.ResponseWriter, r *http.Request) map[string]interface{} {
+	character := &models.Character{}
+	if err := decodeRequest(r, character); err != nil {
+		return invalidRequestMsg()
+	}
+	resp := character.Create() //Создать персонажа
+	//
+	decodeFormPhoto(r, character)
+	character.SavePhotoName()
+	//
 	resp["item"] = ITEM_CHARACTER
 	return resp
 }

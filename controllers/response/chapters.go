@@ -31,7 +31,7 @@ const ITEM_CHAPTER = "chapter"
 var ViewChapter = func(w http.ResponseWriter, r *http.Request) map[string]interface{} {
 	chap_id, hist_id, char_id, err := getChapterIdentif(w, r)
 	if err != nil {
-		return u.Message(u.ERROR, "Invalid request")
+		return invalidRequestMsg()
 	}
 	chapter := models.GetChapter(chap_id, hist_id, char_id)
 	if chapter.ID == 0 {
@@ -46,14 +46,14 @@ var ViewChapter = func(w http.ResponseWriter, r *http.Request) map[string]interf
 var EditChapter = func(w http.ResponseWriter, r *http.Request) map[string]interface{} {
 	chap_id, hist_id, char_id, err := getChapterIdentif(w, r)
 	if err != nil {
-		return u.Message(u.ERROR, "Invalid request")
+		return invalidRequestMsg()
 	}
 	chapter := models.GetChapter(chap_id, hist_id, char_id)
 	if chapter.ID == 0 {
 		return notExMsg(ITEM_CHAPTER)
 	}
 	if err = decodeRequest(r, chapter); err != nil {
-		return u.Message(u.ERROR, "Invalid request")
+		return invalidRequestMsg()
 	}
 	//
 	decodeFormPhoto(r, chapter)
@@ -80,7 +80,7 @@ var CreateChapter = func(w http.ResponseWriter, r *http.Request) map[string]inte
 	}
 
 	if err = decodeRequest(r, chapter); err != nil {
-		return u.Message(u.ERROR, "Invalid request")
+		return invalidRequestMsg()
 	}
 	resp := chapter.Create() //Создать персонажа
 	//
@@ -100,9 +100,7 @@ var DeleteChapter = func(w http.ResponseWriter, r *http.Request) map[string]inte
 	chapter := models.GetChapter(chap_id, hist_id, char_id)
 
 	if chapter.ID == 0 {
-		resp = u.Message(u.ERROR, "Invalid request: Chapter doesn't exists")
-		u.Respond(w, resp)
-		return nil
+		return notExMsg(ITEM_CHAPTER)
 	}
 	resp = chapter.Delete() //Удалить персонажа
 	resp["item"] = ITEM_CHAPTER
@@ -112,7 +110,7 @@ var DeleteChapter = func(w http.ResponseWriter, r *http.Request) map[string]inte
 var GetAllChapters = func(w http.ResponseWriter, r *http.Request) map[string]interface{} {
 	_, hist_id, char_id, err := getChapterIdentif(w, r)
 	if err != nil {
-		return u.Message(u.ERROR, "Invalid request")
+		return invalidRequestMsg()
 	}
 	chapters := models.GetAllChapBy(char_id, hist_id)
 	history := models.GetHistory(hist_id, char_id)
