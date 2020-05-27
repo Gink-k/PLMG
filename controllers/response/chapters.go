@@ -66,11 +66,11 @@ var EditChapter = func(w http.ResponseWriter, r *http.Request) map[string]interf
 var CreateChapter = func(w http.ResponseWriter, r *http.Request) map[string]interface{} {
 	params := getPathParams(r)
 
-	char_id, err := stou(getPathParams(r)["id"])
+	char_id, err := u.Stou(getPathParams(r)["id"])
 	if err != nil {
 		return u.Message(u.ERROR, "Invalid character's id")
 	}
-	hist_id, err := stou(params["h_id"])
+	hist_id, err := u.Stou(params["h_id"])
 	if err != nil {
 		return u.Message(u.ERROR, "Invalid character's id")
 	}

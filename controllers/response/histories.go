@@ -56,7 +56,7 @@ var EditHistory = func(w http.ResponseWriter, r *http.Request) map[string]interf
 }
 
 var CreateHistory = func(w http.ResponseWriter, r *http.Request) map[string]interface{} {
-	char_id, err := stou(getPathParams(r)["id"])
+	char_id, err := u.Stou(getPathParams(r)["id"])
 	if err != nil {
 		return u.Message(u.ERROR, "Invalid character's id")
 	}

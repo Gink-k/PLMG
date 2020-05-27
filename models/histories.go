@@ -63,7 +63,7 @@ func (history *History) SetPhotoName(photoName string) {
 }
 
 func (history *History) SavePhotoName() {
-	history.Edit()
+	GetDB().Model(history).Update("photo", history.Photo)
 }
 
 func GetHistory(hist_id string, char_id string) *History {

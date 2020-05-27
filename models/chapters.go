@@ -62,7 +62,7 @@ func (chapter *Chapter) SetPhotoName(photoName string) {
 }
 
 func (chapter *Chapter) SavePhotoName() {
-	chapter.Edit()
+	GetDB().Model(chapter).Update("photo", chapter.Photo)
 }
 
 func GetChapter(id string, hist_id string, char_id string) *Chapter {

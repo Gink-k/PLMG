@@ -43,6 +43,10 @@ func renderTemplate(w http.ResponseWriter, tmpl string, data map[string]interfac
 	}
 }
 
+//
+//
+//
+
 func getUser(r *http.Request) *models.Account {
 	id := r.Context().Value("user")
 	if id != nil {
@@ -70,17 +74,4 @@ func saveTokenInCookie(w http.ResponseWriter, token string) {
 	token = "Bearer " + token
 	addtime := 24 * 60 * 60
 	setCookie(w, X_SESSION_TOKEN, token, addtime)
-}
-
-func getAdminSection(form map[string][]string) string {
-	sect := form["section"]
-	var result string
-	for i, str := range sect {
-		if i < len(sect)-1 {
-			result += str + " "
-		} else {
-			result += str
-		}
-	}
-	return result
 }

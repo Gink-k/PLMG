@@ -11,6 +11,7 @@ type Character struct {
 	Name    string `json:"name"`
 	About   string `json:"about"`
 	Excerpt string `json:"excerpt"`
+	UserID  uint   `gorm:"default:0"`
 }
 
 func (character *Character) Create() map[string]interface{} {
@@ -74,6 +75,12 @@ func GetCharacter(id string) *Character {
 	char := &Character{}
 	GetDB().Table("characters").Where("id = ?", id).First(char)
 	return char
+}
+
+func GetAllCharBy(user_id string) []Character {
+	var all []Character
+	GetDB().Table("characters").Where("user_id = ?", user_id).Find(&all)
+	return all
 }
 
 func GetAllCharacters() []Character {

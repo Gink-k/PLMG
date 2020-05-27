@@ -10,7 +10,6 @@ import (
 	"path/filepath"
 	"plmg/models"
 	u "plmg/utils"
-	"strconv"
 	"strings"
 
 	"github.com/golang/gddo/httputil/header"
@@ -76,11 +75,6 @@ func getPathFragment(url string, pos int) string {
 	return path
 }
 
-func stou(sid string) (uint, error) {
-	id, err := strconv.Atoi(sid)
-	return uint(id), err
-}
-
 func charExist(char_id string) error {
 	character := models.GetCharacter(char_id)
 	if character.ID == 0 {
@@ -97,10 +91,18 @@ func histExist(hist_id string, char_id string) error {
 	return nil
 }
 
+func getUserIDFromURL(r *http.Request) string {
+	user_id := getPathParams(r)["u_id"]
+	if user_id == "" {
+		user_id = "0"
+	}
+	return user_id
+}
+
 func notExMsg(itemName string) map[string]interface{} {
 	return u.Message(u.ERROR, "Invalid request: "+itemName+" doesn't exists")
 }
 
 func invalidRequestMsg() map[string]interface{} {
-	return invalidRequestMsg()
+	return u.Message(u.ERROR, "Invalid request")
 }

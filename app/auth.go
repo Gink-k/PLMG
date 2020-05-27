@@ -8,6 +8,7 @@ import (
 	"os"
 	"plmg/models"
 	u "plmg/utils"
+	"regexp"
 	"strings"
 
 	jwt "github.com/dgrijalva/jwt-go"
@@ -77,7 +78,7 @@ var WebJwtAuth = func(next http.Handler) http.Handler {
 			}
 		}
 		user := models.GetUser(token.UserId)
-		if reqMethod == "GET" || reqMethod == "POST" && user.IsAdmin() || reqPath == "/logout" {
+		if reqMethod == "GET" || reqMethod == "POST" && (user.IsAdmin() || isUserProfile(reqPath, user.ID)) || reqPath == "/logout" {
 			ctx := context.WithValue(r.Context(), "user", token.UserId)
 			r = r.WithContext(ctx)
 			next.ServeHTTP(w, r)
@@ -120,6 +121,10 @@ func getToken(tokenHeader string) (*models.Token, error) {
 func isSecureReq(reqMethod string, reqPath string) bool {
 	var isStatic bool = false
 	webPrefix := "/characters"
+	user_char, _ := regexp.MatchString("/[0-9]+"+webPrefix, reqPath)
+
+	isWeb := strings.HasPrefix(reqPath, webPrefix) || reqPath == "/" || user_char
+
 	noAuth := []string{"/login", "/registration"}
 	static := []string{"/static", "/data"}
 	noAuthFlag := u.ArrContain(noAuth, reqPath)
@@ -129,5 +134,19 @@ func isSecureReq(reqMethod string, reqPath string) bool {
 			break
 		}
 	}
-	return reqMethod == "GET" && (strings.HasPrefix(reqPath, webPrefix) || reqPath == "/" || isStatic) || noAuthFlag
+	return reqMethod == "GET" && (isWeb || isStatic) || noAuthFlag
+}
+
+func isUserProfile(reqPath string, user_id uint) bool {
+	profile := "/profile/"
+	reqPath = strings.Replace(reqPath, "/api", "", 1)
+	if strings.HasPrefix(reqPath, profile) {
+		s_id := strings.Split(reqPath, "/")[2]
+		id, err := u.Stou(s_id)
+		if err == nil && id == user_id {
+			return true
+		}
+	}
+
+	return false
 }

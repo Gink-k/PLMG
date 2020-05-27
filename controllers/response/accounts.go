@@ -9,6 +9,42 @@ import (
 
 const ITEM_ACCOUNT string = "account"
 
+var ViewAccount = func(w http.ResponseWriter, r *http.Request) map[string]interface{} {
+	id, err := u.Stou(getPathParams(r)["u_id"])
+	if err != nil {
+		return u.Message(u.ERROR, "Invalid user id")
+	}
+	account := models.GetUser(id)
+	var resp map[string]interface{}
+
+	if account.ID == 0 {
+		return notExMsg(ITEM_ACCOUNT)
+	}
+
+	resp = u.Message(u.SUCCESS, "Account has been gotten")
+	resp[ITEM_ACCOUNT] = account
+	resp["item"] = ITEM_ACCOUNT
+	return resp
+}
+
+var EditAccount = func(w http.ResponseWriter, r *http.Request) map[string]interface{} {
+	id, err := u.Stou(r.FormValue("id"))
+	if err != nil {
+		return u.Message(u.ERROR, "Invalid user id")
+	}
+	account := models.GetUser(id)
+	err = decodeRequest(r, account)
+	if err != nil {
+		return invalidRequestMsg()
+	}
+	//
+	decodeFormPhoto(r, account)
+	//
+	resp := account.Edit() //Удалить персонажа
+	resp["item"] = ITEM_ACCOUNT
+	return resp
+}
+
 var CreateAccount = func(w http.ResponseWriter, r *http.Request) map[string]interface{} {
 	account := &models.Account{}
 	err := decodeRequest(r, account) //декодирует тело запроса в struct и завершается неудачно в случае ошибки
@@ -28,26 +64,8 @@ var CreateAccount = func(w http.ResponseWriter, r *http.Request) map[string]inte
 	return resp
 }
 
-var EditAccount = func(w http.ResponseWriter, r *http.Request) map[string]interface{} {
-	id, err := stou(r.FormValue("id"))
-	if err != nil {
-		return u.Message(u.ERROR, "Invalid user id")
-	}
-	account := models.GetUser(id)
-	err = decodeRequest(r, account)
-	if err != nil {
-		return invalidRequestMsg()
-	}
-	//
-	decodeFormPhoto(r, account)
-	//
-	resp := account.Edit() //Удалить персонажа
-	resp["item"] = ITEM_ACCOUNT
-	return resp
-}
-
 var DeleteAccount = func(w http.ResponseWriter, r *http.Request) map[string]interface{} {
-	id, err := stou(r.FormValue("id"))
+	id, err := u.Stou(r.FormValue("id"))
 	if err != nil {
 		return u.Message(u.ERROR, "Invalid user id")
 	}
@@ -78,7 +96,7 @@ var Logout = func(w http.ResponseWriter, r *http.Request) map[string]interface{}
 }
 
 var SetUserAsAdmin = func(w http.ResponseWriter, r *http.Request) map[string]interface{} {
-	id, err := stou(r.FormValue("id"))
+	id, err := u.Stou(r.FormValue("id"))
 	if err != nil {
 		return u.Message(u.ERROR, "Invalid user id")
 	}

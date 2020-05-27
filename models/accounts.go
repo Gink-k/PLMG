@@ -66,11 +66,9 @@ func (account *Account) Validate() (map[string]interface{}, bool) {
 }
 
 func (account *Account) Create() map[string]interface{} {
-
 	if resp, ok := account.Validate(); !ok {
 		return resp
 	}
-
 	hashedPassword, _ := bcrypt.GenerateFromPassword([]byte(account.Password), bcrypt.DefaultCost)
 	account.Password = string(hashedPassword)
 	account.Status = LOGGED
@@ -81,13 +79,11 @@ func (account *Account) Create() map[string]interface{} {
 	if account.ID <= 0 {
 		return u.Message(u.ERROR, "Failed to create account, connection error.")
 	}
-
 	//Создать новый токен JWT для новой зарегистрированной учётной записи
 	tk := &Token{UserId: account.ID}
 	token := jwt.NewWithClaims(jwt.GetSigningMethod("HS256"), tk)
 	tokenString, _ := token.SignedString([]byte(os.Getenv("token_password")))
 	account.Token = tokenString
-
 	account.Password = "" //удалить пароль
 
 	response := u.Message(u.SUCCESS, "Account has been created")
@@ -125,7 +121,7 @@ func (account *Account) SetPhotoName(photoName string) {
 }
 
 func (account *Account) SavePhotoName() {
-	account.Edit()
+	GetDB().Model(account).Update("photo", account.Photo)
 }
 
 func (account *Account) IsAdmin() bool {
@@ -164,13 +160,8 @@ func Login(email, password string) map[string]interface{} {
 }
 
 func GetUser(u uint) *Account {
-
 	acc := &Account{}
 	GetDB().Table("accounts").Where("id = ?", u).First(acc)
-	if acc.Email == "" { //Пользователь не найден!
-		return nil
-	}
-
 	acc.Password = ""
 	return acc
 }

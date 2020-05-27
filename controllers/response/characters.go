@@ -43,7 +43,11 @@ var EditCharacter = func(w http.ResponseWriter, r *http.Request) map[string]inte
 }
 
 var CreateCharacter = func(w http.ResponseWriter, r *http.Request) map[string]interface{} {
-	character := &models.Character{}
+	user_id, err := u.Stou(getUserIDFromURL(r))
+	if err != nil {
+		return u.Message(u.ERROR, "Invalid character's id")
+	}
+	character := &models.Character{UserID: user_id}
 	if err := decodeRequest(r, character); err != nil {
 		return invalidRequestMsg()
 	}
@@ -70,7 +74,7 @@ var DeleteCharacter = func(w http.ResponseWriter, r *http.Request) map[string]in
 }
 
 var GetAllCharacters = func(w http.ResponseWriter, r *http.Request) map[string]interface{} {
-	characters := models.GetAllCharacters()
+	characters := models.GetAllCharBy(getUserIDFromURL(r))
 	resp := u.Message(u.SUCCESS, "Characters has been gotten")
 	item_name := ITEM_CHARACTER + "s"
 	resp[item_name] = characters

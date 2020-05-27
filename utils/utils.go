@@ -3,6 +3,7 @@ package utils
 import (
 	"encoding/json"
 	"net/http"
+	"strconv"
 )
 
 const (
@@ -24,6 +25,11 @@ func Respond(w http.ResponseWriter, data map[string]interface{}) {
 // 	arr := form[name]
 // 	return MakeLine(arr)
 // }
+
+func Stou(sid string) (uint, error) {
+	id, err := strconv.Atoi(sid)
+	return uint(id), err
+}
 
 func MakeLine(arr []string) string {
 	var result string

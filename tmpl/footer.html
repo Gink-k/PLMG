@@ -1,25 +1,4 @@
 		</div>
-		<script>
-			function onSubmit(form) {
-				let formData = new FormData(form);
-				var xhr = new XMLHttpRequest();
-				let method = form.elements._method.value;
-				let path = form.action
-				if (method == "put") {
-					xhr.open("PUT", path);
-					xhr.send(formData);
-				} else if (method == "delete") {
-					xhr.open("DELETE", path);
-					if (confirm("Вы точно уверены в своем решении?")) {
-						xhr.send(formData);
-					}
-				}
-				return false;
-			}
-			function getPathFromUrl(url) {
- 				return url.split(/[?#]/)[0];
-			}
-		</script>
 		<footer class="footer">
 			<div id="hr">
 				<hr>
