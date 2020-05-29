@@ -1,7 +1,7 @@
 {{template "header.html" .}}
     <div class="topside">
         <div class="item-content-wrap">
-            {{if .user.IsAdmin}}
+            {{if or .user.IsAdmin (.user.IsOwnProfile .currentLoc)}}
                 <div class="item-control-panel">
                     <div class="hist-delete control-btn-wrap">
                         <form method="POST">
@@ -27,7 +27,7 @@
                             <input type="file" name="photo_file" accept="image/*">
                             <input type="hidden" name="photo" value="{{.history.Photo}}"/>
                             {{if .history.Photo}}
-                                <img src="../../../data/images/{{.history.Photo}}" alt="Фото не найдено" width="100%" height="100%">
+                                <img src="/data/images/{{.history.Photo}}" alt="Фото не найдено" width="100%" height="100%">
                             {{end}}
                         </div>
                     </div>
@@ -49,7 +49,7 @@
                     </div>
                     <div class="hist-photo">
                         {{if .history.Photo}}
-                            <img src="../../../data/images/{{.history.Photo}}" alt="Фото не найдено" width="100%" height="100%">
+                            <img src="/data/images/{{.history.Photo}}" alt="Фото не найдено" width="100%" height="100%">
                         {{end}}
                     </div>
                 </div>

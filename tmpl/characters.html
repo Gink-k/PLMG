@@ -3,7 +3,7 @@
         <ul>
             {{range .characters}}
                 <li>
-                    <div class="preview-content-wrap"  style="background:white url('../data/images/{{.Photo}}') no-repeat center; background-size: cover;">
+                    <div class="preview-content-wrap"  style="background:white url('/data/images/{{.Photo}}') no-repeat center; background-size: cover;">
                         <a style="display:block" href="characters/{{.ID}}">
                             <div class="preview-char-text-info preview-text-info-wrap">
                                 <div class="preview-char-name preview-title-wrap">
@@ -18,7 +18,7 @@
                 </li>
             {{end}}
             <li>
-                {{if .user.IsAdmin}}
+                {{if or .user.IsAdmin (.user.IsOwnProfile .currentLoc)}}
                     {{$create := .params.Get "create"}}
                         {{if $create}}
                             <div id="bottomside" class="preview-content-wrap">

@@ -64,7 +64,7 @@ func (character *Character) SetPhotoName(photoName string) {
 }
 
 func (character *Character) SavePhotoName() {
-	character.Edit()
+	GetDB().Model(character).Update("photo", character.Photo)
 }
 
 func (character *Character) deletePhoto() {
@@ -75,6 +75,12 @@ func GetCharacter(id string) *Character {
 	char := &Character{}
 	GetDB().Table("characters").Where("id = ?", id).First(char)
 	return char
+}
+
+func GetAllCharByName(name string) []Character {
+	var all []Character
+	GetDB().Table("characters").Where("name like ?", "%"+name+"%").Find(&all)
+	return all
 }
 
 func GetAllCharBy(user_id string) []Character {

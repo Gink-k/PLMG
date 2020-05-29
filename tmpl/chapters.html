@@ -11,15 +11,16 @@
         {{$edit := $.params.Get "edit"}}
             {{range .chapters}}
                 {{$index = inc $index}}
+                {{$data := dict "index" $index "chapter" . "user" $.user "currentLoc" $.currentLoc}}
                 {{if or (eq $edit "") (ne $edit .Title)}}
-                    {{template "chap-view" dict "index" $index "chapter" . "user" $.user}}
+                    {{template "chap-view" $data}}
                 {{else}}
-                    {{template "chap-edit" dict "index" $index "chapter" . "user" $.user}}
+                    {{template "chap-edit" $data}}
                 {{end}}
             {{else}}
 
             {{end}}
-        {{if .user.IsAdmin}}    
+        {{if or .user.IsAdmin (.user.IsOwnProfile .currentLoc)}}    
             {{$add := $.params.Get "add"}}
                 {{if $add}}
                     {{template "chap-create" $index}}

@@ -132,6 +132,20 @@ func (account *Account) IsLogged() bool {
 	return account.Status == LOGGED
 }
 
+func (account *Account) IsOwnProfile(reqPath string) bool {
+	profile := "/profile/"
+	reqPath = strings.Replace(reqPath, "/api", "", 1)
+	if strings.HasPrefix(reqPath, profile) {
+		s_id := strings.Split(reqPath, "/")[2]
+		id, err := u.Stou(s_id)
+		if err == nil && id == account.ID {
+			return true
+		}
+	}
+
+	return false
+}
+
 func Login(email, password string) map[string]interface{} {
 
 	account := &Account{}

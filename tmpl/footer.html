@@ -13,5 +13,12 @@
 				<a href="#"><i class="fa fa-copyright"></i> 2020 developed by Go</a>
 			</div>
 		</footer>
+		<script>
+			window.addEventListener("load", () => {
+				let itemName = "section"
+				let sec = JSON.parse(sessionStorage.getItem(itemName)) || {}
+				if (sec.href !== window.location.href) sessionStorage.removeItem(itemName)
+			})
+		</script>
 	</body>
 </html>

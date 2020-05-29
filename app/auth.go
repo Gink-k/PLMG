@@ -78,7 +78,7 @@ var WebJwtAuth = func(next http.Handler) http.Handler {
 			}
 		}
 		user := models.GetUser(token.UserId)
-		if reqMethod == "GET" || reqMethod == "POST" && (user.IsAdmin() || isUserProfile(reqPath, user.ID)) || reqPath == "/logout" {
+		if reqMethod == "GET" || user.IsAdmin() || user.IsOwnProfile(reqPath) || reqMethod == "POST" && reqPath == "/logout" {
 			ctx := context.WithValue(r.Context(), "user", token.UserId)
 			r = r.WithContext(ctx)
 			next.ServeHTTP(w, r)
@@ -135,18 +135,4 @@ func isSecureReq(reqMethod string, reqPath string) bool {
 		}
 	}
 	return reqMethod == "GET" && (isWeb || isStatic) || noAuthFlag
-}
-
-func isUserProfile(reqPath string, user_id uint) bool {
-	profile := "/profile/"
-	reqPath = strings.Replace(reqPath, "/api", "", 1)
-	if strings.HasPrefix(reqPath, profile) {
-		s_id := strings.Split(reqPath, "/")[2]
-		id, err := u.Stou(s_id)
-		if err == nil && id == user_id {
-			return true
-		}
-	}
-
-	return false
 }

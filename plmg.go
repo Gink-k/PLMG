@@ -44,6 +44,8 @@ func main() {
 	r.HandleFunc(url, api.ApiHandler(contr.DeleteAccount)).Methods("DELETE")
 	r.HandleFunc(url, api.ApiHandler(contr.CreateAccount)).Methods("POST")
 
+	r.HandleFunc("/api/search", api.ApiHandler(contr.SearchHandler)).Methods("POST")
+
 	r.PathPrefix("/static/").Handler(http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
 	r.PathPrefix("/data/").Handler(http.StripPrefix("/data/", http.FileServer(http.Dir("data"))))
 	r.HandleFunc("/", site.MainPageHandler)
@@ -69,6 +71,7 @@ func main() {
 		r.HandleFunc(url, site.SiteHandler(contr.GetAllChapters)).Methods("GET")
 		r.HandleFunc(url, site.SiteHandler(contr.CreateChapter)).Methods("POST")
 	}
+	r.HandleFunc("/search", site.SiteHandler(contr.SearchHandler))
 	r.HandleFunc("/profile/{u_id:"+pattern, site.SiteHandler(contr.ViewAccount)).Methods("GET")
 	r.HandleFunc("/login", site.AuthenticationHandler).Methods("POST")
 	r.HandleFunc("/logout", site.SiteHandler(contr.Logout)).Methods("POST")

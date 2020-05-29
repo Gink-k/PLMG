@@ -2,7 +2,7 @@
     <div class="chap-unit-wrap" id="{{ .chapter.ID }}">
         <div class="chap-content-wrap">
                 <div class="chap-title-block">
-                    {{if .user.IsAdmin}}
+                    {{if or .user.IsAdmin (.user.IsOwnProfile .currentLoc)}}
                         <div class="item-control-panel">                             
                             <div class="chap-edit-btn-wrap control-btn-wrap">
                                 <form method="GET" class="chap-edit-btn-form edit-btn-form">
@@ -27,7 +27,7 @@
                 </div>
                 {{if .chapter.Photo}}
                     <div class="chap-photo-wrap">
-                        <img src="../../../../data/images/{{.chapter.Photo}}" alt="Фото не найдено" width="50%" height="50%">
+                        <img src="/data/images/{{.chapter.Photo}}" alt="Фото не найдено" width="50%" height="50%">
                     </div>
                 {{end}}
                 <div class="chap-text-container">    

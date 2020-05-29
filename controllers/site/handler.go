@@ -28,6 +28,7 @@ func SiteHandler(fn func(w http.ResponseWriter, r *http.Request) map[string]inte
 		tmpl := response["item"].(string)
 		user := getUser(r)
 		response["user"] = user
+		response["currentLoc"] = r.URL.Path
 
 		log.Println("Log: ", r.Method)
 

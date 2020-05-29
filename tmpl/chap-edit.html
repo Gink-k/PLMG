@@ -23,7 +23,7 @@
                     <input type="file" name="photo_file" accept="image/*">
                     <input type="hidden" name="photo" value="{{ .chapter.Photo }}"/>
                     {{if .chapter.Photo}}
-                        <img src="../../../../data/images/{{ .chapter.Photo }}" alt="Фото не найдено" width="100%" height="100%">
+                        <img src="/data/images/{{ .chapter.Photo }}" alt="Фото не найдено" width="100%" height="100%">
                     {{end}}
                 </div>
                 <div class="chap-text-container">    

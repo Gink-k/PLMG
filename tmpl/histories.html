@@ -5,7 +5,7 @@
                 <li>
                     <div class="preview-content-wrap" style="background:white">
                         <a style="display:block" href="histories/{{$hist_obj.History.ID}}{{if not $.user.IsAdmin}}/chapters{{end}}">
-                        <div class="preview-history-text-info preview-text-info-wrap" style="background:white url('../../data/images/{{$hist_obj.History.Photo}}') no-repeat center; background-size: cover;">
+                        <div class="preview-history-text-info preview-text-info-wrap" style="background:white url('/data/images/{{$hist_obj.History.Photo}}') no-repeat center; background-size: cover;">
                                 <div class="preview-history-title preview-title-wrap">
                                     <div class="preview-history-title-content">
                                         <p>{{$hist_obj.History.Title}}:</p>
@@ -19,7 +19,7 @@
                                     <a href="histories/{{$hist_obj.History.ID}}/chapters" style="display: block;">{{inc $i}}. {{$chapter.Title}}</a>
                                 </div>
                             {{end}}
-                            {{if $.user.IsAdmin}}
+                            {{if or $.user.IsAdmin ($.user.IsOwnProfile $.currentLoc)}}
                                 <div class="preview-history-chapters-content">
                                     <a href="histories/{{$hist_obj.History.ID}}/chapters?add=true#chap-create-side" class="add-chapter-button">+Добавить главу</a>
                                 </div>
@@ -29,7 +29,7 @@
                 </li>
             {{end}}
             <li>
-                {{if .user.IsAdmin}}
+                {{if or .user.IsAdmin ($.user.IsOwnProfile $.currentLoc)}}
                     {{$create := .params.Get "create"}}
                         {{if $create}}
                             <div id="bottomside" class="preview-content-wrap">
