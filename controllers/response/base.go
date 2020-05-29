@@ -6,9 +6,9 @@ import (
 	u "plmg/utils"
 )
 
-var DefaultHandler = func(w http.ResponseWriter, r *http.Request, temptaleName string) map[string]interface{} {
-	resp := u.Message(u.SUCCESS, temptaleName+" has been gotten")
-	resp["item"] = temptaleName
+var DefaultHandler = func(w http.ResponseWriter, r *http.Request, itemName string) map[string]interface{} {
+	resp := u.Message(u.SUCCESS, itemName+" has been gotten")
+	resp["item"] = itemName
 	return resp
 }
 
