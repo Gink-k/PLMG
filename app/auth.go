@@ -11,7 +11,7 @@ import (
 	"regexp"
 	"strings"
 
-	jwt "github.com/dgrijalva/jwt-go"
+	"github.com/dgrijalva/jwt-go"
 )
 
 var JwtAuthentication = func(next http.Handler) http.Handler {
@@ -78,7 +78,7 @@ var WebJwtAuth = func(next http.Handler) http.Handler {
 			}
 		}
 		user := models.GetUser(token.UserId)
-		if reqMethod == "GET" || user.IsAdmin() || user.IsOwnProfile(reqPath) || reqMethod == "POST" && reqPath == "/logout" {
+		if reqMethod == "GET" || user.IsAdmin() || isUserSection(user, reqPath) || reqMethod == "POST" && (reqPath == "/logout" || reqPath == "/api/search") {
 			ctx := context.WithValue(r.Context(), "user", token.UserId)
 			r = r.WithContext(ctx)
 			next.ServeHTTP(w, r)
@@ -121,9 +121,8 @@ func getToken(tokenHeader string) (*models.Token, error) {
 func isSecureReq(reqMethod string, reqPath string) bool {
 	var isStatic bool = false
 	webPrefix := "/characters"
-	user_char, _ := regexp.MatchString("/[0-9]+"+webPrefix, reqPath)
 
-	isWeb := strings.HasPrefix(reqPath, webPrefix) || reqPath == "/" || user_char
+	isWeb := strings.HasPrefix(reqPath, webPrefix) || reqPath == "/"
 
 	noAuth := []string{"/login", "/registration"}
 	static := []string{"/static", "/data"}
@@ -135,4 +134,21 @@ func isSecureReq(reqMethod string, reqPath string) bool {
 		}
 	}
 	return reqMethod == "GET" && (isWeb || isStatic) || noAuthFlag
+}
+
+func isUserSection(user *models.Account, reqPath string) bool {
+	return user.IsOwnProfile(reqPath)
+}
+
+func getUserIDFromPath(reqPath string) uint {
+	path := strings.Replace(reqPath, "/api", "", 1)
+	re := regexp.MustCompile(`/characters/([0-9]+).*`)
+	submatch := re.FindStringSubmatch(path)
+	if len(submatch) == 2 {
+		id, err := u.Stou(submatch[1])
+		if err == nil {
+			return id
+		}
+	}
+	return 0
 }

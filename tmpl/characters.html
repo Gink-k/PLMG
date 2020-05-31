@@ -1,8 +1,8 @@
 {{template "header.html" .}}
-    <div class="preview-topside">
+    <div class="topside">
         <ul>
             {{range .characters}}
-                <li>
+                <li class="char-list-item">
                     <div class="preview-content-wrap"  style="background:white url('/data/images/{{.Photo}}') no-repeat center; background-size: cover;">
                         <a style="display:block" href="characters/{{.ID}}">
                             <div class="preview-char-text-info preview-text-info-wrap">
@@ -45,7 +45,7 @@
                         {{else}}
                             <div class="preview-content-wrap"  style="background-color:white;">
                                 <a style="display:block" href="characters?create=true">
-                                    <div class="preview-char-text-info preview-text-info-wrap">
+                                    <div class="char-create-btn preview-char-text-info preview-text-info-wrap">
                                         <p>+Добавить нового персонажа</p>
                                     </div>
                                 </a>

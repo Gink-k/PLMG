@@ -252,15 +252,6 @@ footer .container.copyright a {
 	text-shadow: white 0 0 10px;
 }
 
-.preview-topside {
-	display: inline-block;
-	opacity: 1;
-	min-height: 70vh;
-	width: 80%;
-	text-align: initial;
-	padding: 6vh;
-}
-
 .preview-content-wrap {
 	opacity: 1;
 	border: 1px solid rgb(150, 150, 150);
@@ -328,7 +319,15 @@ footer .container.copyright a {
 /*############*/
 
 .preview-char-text-info {
-	display: inline-block;
+	width: calc(100% - 80px - 40px) !important; /*80px preview-text-info-wrap padding*/
+	background-color: white;
+	margin: 40px 20px;
+	margin-bottom: 10px;
+	border-radius: 20px;
+}
+
+.char-create-btn {
+	margin: 0px;
 }
 
 .preview-char-name {
@@ -369,11 +368,11 @@ footer .container.copyright a {
 
 .topside {
 	display: inline-block;
-	opacity: 80%;
+	opacity: 1;
 	min-height: 70vh;
 	width: 80%;
 	text-align: initial;
-	padding: 6vh 4vw;
+	margin: 50px 50px;
 }
 
 .item-content-wrap {
@@ -407,7 +406,7 @@ footer .container.copyright a {
 }
 
 .preview-text-info-wrap {
-	width: calc(100% - 80px)!important;
+	width: calc(100% - 80px);
 	padding: 20px 40px;
 	font-weight: bold;
 	font-style: italic;
@@ -568,9 +567,6 @@ footer .container.copyright a {
 /* histories */
 /*###########*/
 
-.preview-history-text-info {
-}
-
 .preview-history-chapters-content {
 	padding: 5px 20px;
 }
@@ -579,8 +575,6 @@ footer .container.copyright a {
 	color: rgb(212, 212, 212);
 }
 
-.hist-add-form-label {
-}
 
 /*#########*/
 /* history */
@@ -609,6 +603,7 @@ footer .container.copyright a {
 }
 
 .chapters-wrap {
+	text-align: center;
 }
 
 .ch-topside-block {
@@ -618,28 +613,12 @@ footer .container.copyright a {
 	border: 1px solid rgb(150, 150, 150);
 }
 
-.ch-hist-title-wrap {
-	
-}
-
-.ch-hist-control-panel {
-	
-}
-
-.chap-unit-wrap {
-	
-}
-
 .chap-content-wrap {
 	background-color: white;
 }
 
 .chap-content-wrap p {
 	color: black;
-}
-
-.chap-title-block {
-
 }
 
 .chap-edit-btn-wrap {
@@ -667,10 +646,6 @@ footer .container.copyright a {
 	font-size: 22px;
 }
 
-.chap-text-container {
-
-}
-
 .chap-text-wrap {
 	padding: 0px 60px 40px 60px;
 	text-align: left;
@@ -695,10 +670,6 @@ footer .container.copyright a {
 	height: 100%;
 	padding: 0;
 	margin: 20px 0px;
-}
-
-.chap-edit-submit-wrap {
-	/* margin-bottom: 10px; */
 }
 
 /* ######### */
@@ -785,10 +756,6 @@ footer .container.copyright a {
 	border: 0.04px solid rgb(212, 212, 212);
 }
 
-#admin-control-panel {
-
-}
-
 /* ######### */
 /*  account  */
 /* ######### */
@@ -810,9 +777,6 @@ footer .container.copyright a {
 	vertical-align: top;
 }
 
-.acc-nav-btn-wrap {
-	/* padding: 25px 30px; */
-}
 
 .acc-nav-btn {
 	display: block;
@@ -879,9 +843,6 @@ footer .container.copyright a {
 	border-bottom: 1px solid rgb(212, 212, 212);	
 }
 
-.acc-char-view {
-}
-
 .acc-char-photo-wrap img {
 	width: 250px;
 	height: 250px;
@@ -912,4 +873,30 @@ footer .container.copyright a {
 
 .acc-item-prop p{
 	padding-top: 10px;
+}
+
+/*################################*/
+/*############search##############*/
+/*################################*/
+
+.search-topside {
+	background-color: white;
+}
+
+.search-wrap {
+	padding: 40px;
+}
+
+.search-wrap form {
+	margin-bottom: 20px;
+}
+
+.search-wrap input[type="text"] {
+	width: 80%;
+	height: 25px;
+	margin-right: 15px;
+}
+
+.search-wrap input[type="submit"] {
+	height: 30px;
 }

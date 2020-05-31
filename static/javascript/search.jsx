@@ -47,49 +47,32 @@ function SearchResultPanel(props) {
         return <Wrap className="load">Идет загрузка</Wrap>
     } else {
         return (
-            <Wrap>
+            <ul>
                 {props.searchResult.search.map(value => {
-                    return <ViewChar char={value}/>
+                    return <li key={value.ID}><ViewChar char={value}/></li>
                 })}
-            </Wrap>
+            </ul>
         )
     }
 }
 
-// duplicates from account.jsx (need to improve namespace)
+// copied from characters.html
 
 function ViewChar(props) {
-    const {CreatedAt, UpdatedAt, DeletedAt, ID, UserID, photo, ...textContent} = props.char
-    const date = {CreatedAt, UpdatedAt} // titles={{"CreatedAt": "Дата создания", "UpdatedAt": "Дата обновления"}}
+    const char = props.char
     return (
-        <Wrap class="acc-char-view">
-            <ViewItem item={date} className="char-date"/>
-            <ImageWrap name={photo} className="acc-char-photo"/>
-            <ViewItem item={textContent} titles={{"about": "Обо мне", "excerpt": "Отрывок", "name": "Имя"}} className="char-content"/>
-        </Wrap>
-    )
-}
-
-function ViewItem(props) {
-    const item = props.item || {}
-    let className = `acc-${props.className}`
-    return (
-        <Wrap className={className}>
-            {Object.entries(item).map(([key, value]) => {
-                let itemClass = `acc-item-prop acc-${props.className}-${key}`
-                const elem = key == "photo"? <img src={IMAGE_STORAGE + value}/> : <p>{value}</p>
-                const title = props.titles && key in props.titles && <h2>{props.titles[key]}</h2> || ""
-                
-                if (key in {"CreatedAt":1, "UpdatedAt":1}) itemClass = "date-line-wrap " + itemClass
-                if (key == "ID") return
-                return (
-                    <Wrap className={itemClass}>
-                        {title}
-                        {elem}
-                    </Wrap>
-                )
-            })}
-        </Wrap>
+        <div class="preview-content-wrap"  style={{"background":`white url('/data/images/${char.photo}') no-repeat center`, "backgroundSize": "cover"}}>
+            <a style={{"display":"block"}} href={`characters/${char.ID}`}>
+                <div class="preview-char-text-info preview-text-info-wrap">
+                    <div class="preview-char-name preview-title-wrap">
+                        <p>{ char.name }:</p>
+                    </div>
+                    <div class="preview-char-about">
+                        <p>{ char.about }</p>
+                    </div>
+                </div>
+            </a>
+        </div>
     )
 }
 

@@ -138,12 +138,16 @@ func (account *Account) IsOwnProfile(reqPath string) bool {
 	if strings.HasPrefix(reqPath, profile) {
 		s_id := strings.Split(reqPath, "/")[2]
 		id, err := u.Stou(s_id)
-		if err == nil && id == account.ID {
+		if err == nil && account.IsOwnID(id) {
 			return true
 		}
 	}
 
 	return false
+}
+
+func (account *Account) IsOwnID(ID uint) bool {
+	return account.ID == ID
 }
 
 func Login(email, password string) map[string]interface{} {
