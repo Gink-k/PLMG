@@ -91,10 +91,19 @@ func histExist(hist_id string, char_id string) error {
 	return nil
 }
 
-func getUserIDFromURL(r *http.Request) string {
-	user_id := getPathParams(r)["u_id"]
+func getUserIDFromReq(r *http.Request) string {
+	var user_id string
+	if r.Method == "POST" {
+		user_id = r.FormValue("user_id")
+	}
+	if r.Method == "GET" {
+		user_id = r.URL.Query().Get("user_id")
+	}
 	if user_id == "" {
-		user_id = "0"
+		user_id = getPathParams(r)["u_id"]
+		if user_id == "" {
+			user_id = "0"
+		}
 	}
 	return user_id
 }

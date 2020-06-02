@@ -62,7 +62,7 @@ function ViewChar(props) {
     const char = props.char
     return (
         <div class="preview-content-wrap"  style={{"background":`white url('/data/images/${char.photo}') no-repeat center`, "backgroundSize": "cover"}}>
-            <a style={{"display":"block"}} href={`characters/${char.ID}`}>
+            <a class="preview-link" style={{"display":"block"}} href={`characters/${char.ID}`}>
                 <div class="preview-char-text-info preview-text-info-wrap">
                     <div class="preview-char-name preview-title-wrap">
                         <p>{ char.name }:</p>

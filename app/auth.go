@@ -78,7 +78,7 @@ var WebJwtAuth = func(next http.Handler) http.Handler {
 			}
 		}
 		user := models.GetUser(token.UserId)
-		if reqMethod == "GET" || user.IsAdmin() || isUserSection(user, reqPath) || reqMethod == "POST" && (reqPath == "/logout" || reqPath == "/api/search") {
+		if reqMethod == "GET" || user.IsAdmin() || isUserSection(user, r) || reqMethod == "POST" && (reqPath == "/logout" || reqPath == "/api/search") {
 			ctx := context.WithValue(r.Context(), "user", token.UserId)
 			r = r.WithContext(ctx)
 			next.ServeHTTP(w, r)
@@ -136,14 +136,19 @@ func isSecureReq(reqMethod string, reqPath string) bool {
 	return reqMethod == "GET" && (isWeb || isStatic) || noAuthFlag
 }
 
-func isUserSection(user *models.Account, reqPath string) bool {
-	return user.IsOwnProfile(reqPath)
+func isUserSection(user *models.Account, r *http.Request) bool {
+	reqUserId, err := u.Stou(r.FormValue("user_id"))
+	if err != nil {
+		return false
+	}
+	return user.IsOwnID(reqUserId) //user.IsOwnProfile(reqPath)
 }
 
 func getUserIDFromPath(reqPath string) uint {
 	path := strings.Replace(reqPath, "/api", "", 1)
 	re := regexp.MustCompile(`/characters/([0-9]+).*`)
 	submatch := re.FindStringSubmatch(path)
+	log.Println(path, submatch)
 	if len(submatch) == 2 {
 		id, err := u.Stou(submatch[1])
 		if err == nil {

@@ -20,7 +20,7 @@
             {{else}}
 
             {{end}}
-        {{if or .user.IsAdmin (.user.IsOwnProfile .currentLoc)}}    
+        {{if .user.IsAdmin}}    
             {{$add := $.params.Get "add"}}
                 {{if $add}}
                     {{template "chap-create" $index}}

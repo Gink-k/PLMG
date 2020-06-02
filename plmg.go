@@ -58,7 +58,7 @@ func main() {
 	r.HandleFunc(url+"/{h_id:"+pattern, site.SiteHandler(contr.ViewHistory)).Methods("GET")
 	r.HandleFunc(url+"/{h_id:"+pattern+"/edit", site.SiteHandler(contr.EditHistory)).Methods("POST")
 	r.HandleFunc(url+"/{h_id:"+pattern, site.SiteHandler(contr.DeleteHistory)).Methods("POST")
-	r.HandleFunc(url, site.SiteHandler(contr.GetAllHistories)).Methods("GET")
+	r.HandleFunc(url, site.SiteHandler(contr.GetAllHistoriesWithChaps)).Methods("GET")
 	r.HandleFunc(url, site.SiteHandler(contr.CreateHistory)).Methods("POST")
 	url += "/{h_id:" + pattern + "/chapters"
 	// r.HandleFunc(url+"/{c_title:"+pattern, site.SiteHandler(contr.ViewChapter)).Methods("GET")

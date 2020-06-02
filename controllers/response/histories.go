@@ -92,12 +92,24 @@ var DeleteHistory = func(w http.ResponseWriter, r *http.Request) map[string]inte
 	return resp
 }
 
+var GetAllHistories = func(w http.ResponseWriter, r *http.Request) map[string]interface{} {
+	_, char_id, err := getHistoryIdentif(w, r)
+	if err != nil {
+		return u.Message(u.ERROR, "Invalid character's id")
+	}
+	histories := models.GetAllHistBy(char_id)
+	resp := u.Message(u.SUCCESS, "Histories has been gotten")
+	resp["histories"] = histories
+	resp["item"] = "histories"
+	return resp
+}
+
 type historyObject struct {
 	History  models.History
 	Chapters []models.Chapter
 }
 
-var GetAllHistories = func(w http.ResponseWriter, r *http.Request) map[string]interface{} {
+var GetAllHistoriesWithChaps = func(w http.ResponseWriter, r *http.Request) map[string]interface{} {
 	_, char_id, err := getHistoryIdentif(w, r)
 	if err != nil {
 		return u.Message(u.ERROR, "Invalid character's id")

@@ -19,7 +19,7 @@
                                     <a href="histories/{{$hist_obj.History.ID}}/chapters" style="display: block;">{{inc $i}}. {{$chapter.Title}}</a>
                                 </div>
                             {{end}}
-                            {{if or $.user.IsAdmin ($.user.IsOwnProfile $.currentLoc)}}
+                            {{if $.user.IsAdmin}}
                                 <div class="preview-history-chapters-content">
                                     <a href="histories/{{$hist_obj.History.ID}}/chapters?add=true#chap-create-side" class="add-chapter-button">+Добавить главу</a>
                                 </div>
@@ -29,7 +29,7 @@
                 </li>
             {{end}}
             <li>
-                {{if or .user.IsAdmin ($.user.IsOwnProfile $.currentLoc)}}
+                {{if .user.IsAdmin}}
                     {{$create := .params.Get "create"}}
                         {{if $create}}
                             <div id="bottomside" class="preview-content-wrap">

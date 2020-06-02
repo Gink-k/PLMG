@@ -1,6 +1,6 @@
 {{define "char-view"}}
 <div class="item-control-panel">
-    {{if or .user.IsAdmin (.user.IsOwnProfile .currentLoc)}}
+    {{if .user.IsAdmin}}
         <div class="char-edit control-btn-wrap">
             <form method="GET" class="char-edit-btn-form edit-btn-form">
                 <input type="hidden" name="edit" value="true" />

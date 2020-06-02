@@ -2,7 +2,7 @@
     <div class="topside">
         <div class="item-content-wrap">
             {{$edit := .params.Get "edit"}}
-                {{if and $edit (or .user.IsAdmin (.user.IsOwnProfile .currentLoc))}}
+                {{if and $edit .user.IsAdmin}}
                     {{template "char-edit" .character}}
                 {{else}}
                     {{template "char-view" .}}
