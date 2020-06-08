@@ -4,8 +4,6 @@ const IMAGE_STORAGE = "/data/images/"
 function Account(props) {
     const [section, setSection] = React.useState(getSection() || "account")
     const [userInfo, setUserInfo] = React.useState({})
-    const [wrapHeight, setWrapHeight] = React.useState("")
-    const parentWrapRef = React.useRef()
     React.useEffect(() => {
         let acc = getUserInfo()
         setUserInfo(acc)
@@ -17,22 +15,18 @@ function Account(props) {
         return document.querySelector('#account-data').dataset
     }
     function handleNavClick(e, sectionName) {
-        setSection(sectionName)
+        if (section == sectionName) {
+            setSection("")
+        }
+        setTimeout(() => setSection(sectionName))
     }
     function handleNavHeight(event) {
-        if (event.target.closest(".item-control-button")) {
-            const height = wrapHeight + "px"
-            let nav = document.querySelector(".acc-nav-wrap")
-            nav.style.height = height
-            parentWrapRef.current.height = height
-        } else if (event.target.closest(".acc-create-char-button")) {
-            const oldParentHeight = parentWrapRef.current.scrollHeight.toString()
-            setWrapHeight(oldParentHeight)
+        if (event.target.closest("a") || event.type == "load") {
             setTimeout(() => {
-                const parentHeight = parentWrapRef.current.scrollHeight.toString()
                 let nav = document.querySelector(".acc-nav-wrap")
-                nav.style.height = parentHeight + "px"
-            }, 10)
+                let profilePanel = document.querySelector(".profile-panel")
+                nav.style.height = profilePanel.scrollHeight + "px"
+            }, 50)
         }
     }
 
@@ -45,9 +39,11 @@ function Account(props) {
             panel = <CharInfoPanel user={userInfo}/>
             break
         case "comments":
+        default:
+            panel = <Wrap/>
     } // _ref={parentWrapRef} parent={parentWrapRef.current}
     return (
-        <Wrap _ref={parentWrapRef} onClick={handleNavHeight} className="acc"> 
+        <Wrap onLoad={handleNavHeight} onClick={handleNavHeight} className="acc"> 
             <Navigation section={section} handleNavClick={handleNavClick}/>
             {panel}
         </Wrap>
@@ -105,78 +101,6 @@ function AccInfoPanel(props) {
     )
 }
 
-function CharInfoPanel(props) {
-    const [response, setResponse] = React.useState(null)
-    const [isLoaded, setIsLoaded] = React.useState(false);
-    const [pathName, setPathName] = React.useState("/characters")
-    const [error, setError] = React.useState(null);
-    React.useEffect(() => {
-        if (!props.user.id) return
-        const url =  `${getCurrentApiUrl() + pathName}?user_id=${props.user.id}`
-        fetch(url)
-        .then(res => res.json())
-        .then(
-            result => {
-                setResponse(result)
-                setIsLoaded(true)
-            })
-        .catch(reason => setError(reason))
-    }, [pathName, props.user])
-
-    if (error) {
-        return <Wrap className="error">Произошла ошибка, невозможно получить данные с сервера!{error}</Wrap>
-    } else if (!isLoaded) {
-        return <Wrap className="load">Идет загрузка</Wrap>
-    } else {
-        return <Wrap className="profile-panel "><ItemPanel user={props.user} response={response} pathName={pathName} handleClick={(e, path)=>setPathName(path)}/></Wrap>
-    }
-}
-
-function ItemPanel(props) {
-    const [header, setHeader] = React.useState(null)
-    let [items, itemName] = [{}, ""]
-    let elements = []
-    if (props.response) {
-        itemName = props.response.item
-        items = props.response[itemName]
-        console.log(props.response)
-        //items = items[itemName]
-    }
-
-    function handleClick(e, path) {
-        e.preventDefault()
-        const list_item = e.target.closest(".acc-view")
-        const id = list_item && +list_item.id
-        setHeader(elements[id])
-        props.handleClick(e, path)
-    }
-    elements = items.map((value, index) => {return <ItemRow id={index} item={value} itemName={itemName} pathName={props.pathName} handleCLick={handleClick}/>})
-    
-    return (
-        <Wrap className="acc-item-list">
-            {header}
-            {elements}
-            <ItemRow state={3} itemName={itemName} pathName={props.pathName}/>
-        </Wrap>
-    )
-}
-
-function ItemRow(props) {
-    const [state, setState] = React.useState(props.state || 0)
-    const {item, itemName} = props
-    const path = item ? props.pathName + "/" + item.ID : props.pathName
-    function handleClick(e, newState) {
-        e.preventDefault()
-        setState(newState)
-    }
-
-    switch (state) {
-        case 0: return <ItemView id={props.id} item={item} itemName={itemName} pathName={path} handleDetailsClick={props.handleCLick} handleEditClick={e=>handleClick(e, 1)}/>
-        case 1: return <ItemEdit id={props.id} item={item} itemName={itemName} pathName={path} handleBackClick={e=>handleClick(e, 0)}/> 
-        case 2: return <ItemCreate id={props.id} itemName={itemName} pathName={path} handleBackClick={e=>handleClick(e, 3)}/>
-        case 3: return <a className="acc-create-item-button" onClick={e=>handleClick(e, 2)}>Создать</a>
-    }
-}
 
 const mainItems = {
     "characters" : {
@@ -195,8 +119,176 @@ const mainItems = {
         "view": ViewChap,
         "edit": ChapForm,
         "create": ChapForm,
-        "next": "characters",
     },
+}
+
+function CharInfoPanel(props) {
+    const [response, setResponse] = React.useState(null)
+    const [isLoaded, setIsLoaded] = React.useState(false);
+    const [pathName, setPathName] = React.useState("/characters")
+    const [error, setError] = React.useState(null);
+    React.useEffect(() => {
+        handleServerInfo(pathName)
+    }, [props.user.id])
+
+    function handleServerInfo(path) {
+        if (!props.user.id) return
+        const url =  `${getCurrentApiUrl() + path}?user_id=${props.user.id}`
+        fetch(url)
+        .then(res => res.json())
+        .then(
+            result => {
+                setResponse(result)
+                setIsLoaded(true)
+            })
+        .catch(reason => setError(reason))
+        setPathName(path)
+    }
+
+    if (error) {
+        return <Wrap className="error">Произошла ошибка, невозможно получить данные с сервера!{error}</Wrap>
+    } else if (!isLoaded) {
+        return <Wrap className="load">Идет загрузка</Wrap>
+    } else {
+        return <Wrap className="profile-panel "><ItemPanel user={props.user} response={response} pathName={pathName} handleServerInfo={handleServerInfo}/></Wrap>
+    }
+}
+
+function ItemPanel(props) {
+    const [allElements, setAllElements] = React.useState([])
+    const [details, setDetails] = React.useState(null)
+    let [items, itemName] = [{}, ""]
+    let elements = []
+    if (props.response) {
+        itemName = props.response.item
+        items = props.response[itemName]
+    }
+    React.useEffect(() => {
+        const idStart = props.idStart || 0
+        elements = items.map((value, index) => {
+            return <ItemRow id={idStart + index} item={value} itemName={itemName} pathName={props.pathName} handleClick={handleClick}/>
+        })
+        setAllElements(elements)
+        setDetailsButton()
+    }, [])
+
+    React.useEffect(() => {
+        const fetchPath = getFetchPath()
+        if (fetchPath) {
+            const sectArr = fetchPath.split("/")
+            const curPathArr = props.pathName.split("/")
+            const pathLen = curPathArr.length
+            if (sectArr.length <= pathLen + 1) {
+                rmFetchPath()
+                return
+            }
+            const newPath = `${props.pathName}/${sectArr[pathLen]}/${sectArr[pathLen+1]}`
+            const header = document.querySelector(`.acc-view[data-item-id="${sectArr[pathLen]}"]`)
+            if (!header) return
+            animateList(header, slowlyRaise, (elem) => slowlyHide(elem, 1000))
+            .then(result => {
+                props.handleServerInfo(newPath)
+            })
+        }
+    }, [allElements])
+    
+    React.useEffect(() => {
+        if (allElements.length) {
+            const deeperItemPanel = <ItemPanel idStart={allElements.length} response={props.response} pathName={props.pathName} handleServerInfo={props.handleServerInfo}/>
+            setDetails(deeperItemPanel)
+        }
+    }, [props.response])
+
+    function getDetailsButton() {
+        return <ItemRow state={3} itemName={itemName} pathName={props.pathName}/>
+    }
+    function setDetailsButton() {
+        setDetails(getDetailsButton())
+    }
+    function slowlyRaise(clickedElem, duration) {
+        const elOffsetTop = clickedElem.offsetTop
+        clickedElem.addEventListener("click", handlePrevSection)
+        clickedElem.style.position = "absolute"
+        clickedElem.style.top = elOffsetTop + "px"
+        clickedElem.style.transition = `top ${duration}ms ease-in 0s`
+        clickedElem.classList.add("header")
+        clickedElem.parentElement.classList.add("header")
+        clickedElem.parentElement.dataset.item = itemName
+        animateHeader(clickedElem, slowlyHide)
+        setTimeout(() => {
+            clickedElem.style.top = "0"
+            window.scrollTo({
+                top:0,
+                behavior:"smooth",
+            })
+        })
+    }
+
+    function slowlyGoDown(clickedElem, duration) {
+        clickedElem.classList.remove("header")
+        clickedElem.parentElement.classList.remove("header")
+        animateHeader(clickedElem, slowlyShow)
+    }
+
+    function animateList(clickedElem, clickedElemAnimFunc, otherElemAnimFunc) {
+        const elems = clickedElem.parentElement.children
+        let delay = 1000
+        Array.prototype.map.call(elems, (elem) => {
+            if (elem.id == clickedElem.id) clickedElemAnimFunc(clickedElem, delay)
+            else otherElemAnimFunc(elem, delay)
+        })
+        return new Promise((resolve) => {
+            setTimeout(() => {
+                clickedElem.style.position = "relative"
+                resolve("готово!")
+            }, delay + 50)
+        })
+    }
+
+    function handlePrevSection(e) {
+        let itemListElems = document.querySelectorAll(".acc-item-list-wrap")
+        for (let elem of itemListElems) {
+            if (elem.dataset.item != itemName) {
+                if (!elem.classList.contains("header"))
+                    elem.hidden = true
+            }
+            else animateList(this, slowlyGoDown, slowlyShow)
+        }
+        this.removeEventListener("click", handlePrevSection)
+        setDetails(null)
+    }
+    
+    async function handleClick(e, path) {
+        e.preventDefault()
+        const list_item = e.target.closest(".acc-view")
+        await animateList(list_item, slowlyRaise, (elem) => slowlyHide(elem, 1000))
+        props.handleServerInfo(path)
+    }
+
+    return (
+        <Wrap className="acc-item-list" dataid={props.id}>
+            <div className="header-anchor"></div>
+            {allElements}
+            {details}
+        </Wrap>
+    )
+}
+
+function ItemRow(props) {
+    const [state, setState] = React.useState(props.state || 0)
+    const {item, itemName} = props
+    const path = item ? props.pathName + "/" + item.ID : props.pathName
+    function handleClick(e, newState) {
+        e.preventDefault()
+        setState(newState)
+    }
+
+    switch (state) {
+        case 0: return <ItemView id={props.id} item={item} itemName={itemName} pathName={path} handleDetailsClick={props.handleClick} handleEditClick={e=>handleClick(e, 1)}/>
+        case 1: return <ItemEdit id={props.id} item={item} itemName={itemName} pathName={path} handleBackClick={e=>handleClick(e, 0)}/> 
+        case 2: return <ItemCreate id={props.id} itemName={itemName} pathName={path} handleBackClick={e=>handleClick(e, 3)}/>
+        case 3: return <a className="acc-create-item-button" onClick={e=>handleClick(e, 2)}>Создать</a>
+    }
 }
 
 function ItemView(props) {
@@ -209,17 +301,18 @@ function ItemView(props) {
     function handleDetailsClick(e) {
         if (!compObj) return
         const path = `${props.pathName}/${compObj.next}`
-        console.log(path)
         props.handleDetailsClick(e, path)
     }
     return (
-        <Wrap class="acc-view" id={props.id}>
+        <ItemWrap itemName={props.itemName} id={props.id} itemID={ID}>
             <ControlPanel values={["изменить"]} onClick={[props.handleEditClick]}/>
             <ViewItemProps item={date} className="item-date"/>
             <ImageWrap name={photo} className="acc-item-photo"/>
             {View}
-            <a onClick={handleDetailsClick}>Детали</a>
-        </Wrap>
+            {[1].map(() => {
+                if (compObj.next) return <a onClick={handleDetailsClick}>Детали</a>
+            })}
+        </ItemWrap>
     )
 }
 function ItemEdit(props) {
@@ -227,7 +320,7 @@ function ItemEdit(props) {
     const Elem = compObj && compObj.edit
     const Edit = Elem ? <Elem item={props.item} handleBackClick={props.handleBackClick}/> : "" 
     return(
-        <Wrap class="acc-view" id={props.id}>
+        <ItemWrap itemName={props.itemName} id={props.id} data-item-id={props.item.ID}>
             <ControlPanel values={["Назад"]} onClick={[props.handleBackClick]}>
                 <DeleteForm url={props.url}/>
             </ControlPanel>
@@ -235,23 +328,26 @@ function ItemEdit(props) {
                 <input type="file" name="photo_file" accept="image/*"/>
                 {Edit}
             </PutForm>
-        </Wrap>
+        </ItemWrap>
     )
 }
 function ItemCreate(props) {
-    console.log(props.itemName)
     const compObj = mainItems[props.itemName]
     const Elem = compObj && compObj.create
     const Create = Elem ? <Elem handleBackClick={props.handleBackClick}/> : "" 
     return (
-        <Wrap class="acc-view" id={props.id}>
+        <ItemWrap itemName={props.itemName} id={props.id}>
             <ControlPanel values={["Назад"]} onClick={[props.handleBackClick]}/>
             <PostForm url={props.pathName}>
                 <input type="file" name="photo_file" accept="image/*"/>
                 {Create}
             </PostForm>
-        </Wrap>
+        </ItemWrap>
     )
+}
+
+function ItemWrap(props) {
+    return <Wrap className="acc-view " id={props.id} data-item-id={props.itemID}>{props.children}</Wrap>
 }
 
 function ViewChar(props) {
@@ -296,14 +392,14 @@ function ViewChap(props) {
 
 function ChapForm(props) {
     const chap = props.item || {}
-    const [name, setName] = React.useState(chap.name || "")
+    const [name, setName] = React.useState(chap.title || "")
     function handleChange(e) {
         setName(e.target.value)
     }
     return (
         <LabelAdder labels={["Заглавие", "Текст"]}>
-            <input id="form-chap-title" type="text" name="name" value={name} onChange={handleChange}/>
-            <textarea id="form-chap-text" name="excerpt">{char.excerpt}</textarea>
+            <input id="form-chap-title" type="text" name="title" value={name} onChange={handleChange}/>
+            <textarea id="form-chap-text" name="text">{chap.text}</textarea>
         </LabelAdder>
     )
 }
@@ -358,7 +454,10 @@ function FormComp(props) {
         fetch(url, {
             method: props.method,
             body: formData
-        })//.finally(() => window.location.reload())
+        }).finally(() => {
+            saveFetchPath(props.url)
+            window.location.reload()
+        })
     }
     return (
         <form className={className} onSubmit={handleSubmit}>
@@ -373,35 +472,24 @@ function ControlPanel(props) {
     return (
         <Wrap className="acc-control-panel">
             {props.values.map((value, index)=>{
-                return (<Wrap className="control-btn">
-                    <a class="item-control-button" onClick={props.onClick[index]}>{value}</a>
-                </Wrap>)
+                return (
+                    <Wrap className="control-btn" onMouseDown={(e)=>e.preventDefault()}>
+                        <a class="item-control-button" onClick={props.onClick[index]}>{value}</a>
+                    </Wrap>
+                )
             })}
             {props.children}
         </Wrap>
     )
 }
 
-function ListItem(props) {
-    const {children, ...rest} = props
-    return (
-        <li {...rest}>{children}</li>
-    )
-}
-
-function TableRow(props) {
-    return (
-        <tr class="acc-table-row">
-            {props.children.map(child => 
-                <td>{child}</td>
-            )}
-        </tr>
-    )
-}
-
 function Wrap(props) {
     let {className, children, _ref, ...restProps} = props
-    className = className ? className + "-wrap" : "wrap"
+    if (className) {
+        const lLetter = className.length - 1
+        if (className[lLetter] == " ") className = className.slice(0, lLetter)
+        else className = className + "-wrap"
+    } else className = ""
     return (
         <div className={className} ref={_ref} {...restProps}>{children}</div>
     ) 
@@ -409,10 +497,9 @@ function Wrap(props) {
 
 function ImageWrap(props) {
     const imgName = props.name ? props.name : "plmg_icon.jpg"
+    const imgSrc = IMAGE_STORAGE + imgName
     return (
-        <Wrap className={props.className}>
-            <img src={`/data/images/${imgName}`}/>    
-        </Wrap>
+        <img className={props.className + "-wrap"} src={imgSrc}/>
     )
 }
 
@@ -430,13 +517,60 @@ function LabelAdder(props) {
     return comps
 }
 
-function saveSection(sectionName) {
-    sessionStorage.setItem("section", JSON.stringify({"section": sectionName, "href": window.location.href}))
+function slowlyHide(elem, timeout=0) {
+    elem.style.opacity = "0"
+    setTimeout(() => elem.style.display = "none", timeout)
 }
 
+function slowlyShow(elem, timeout=0) {
+    elem.style.opacity = "1"
+    setTimeout(() => elem.style.display = "", timeout)
+}
+
+function animateHeader(clickedElem, hideOrShowFunc) {
+    for (let content of clickedElem.children) {
+        if (content.classList.contains("acc-item-photo-wrap")) {
+            content.classList.toggle("img-header")
+            if (content.classList.contains("img-header")) 
+                content.style.width = Math.floor(clickedElem.parentElement.getBoundingClientRect().width) - (30 + clickedElem.clientLeft * 2) + "px"
+            else content.style.width = "250px"
+            continue
+        }
+        if (/.*content-wrap/.test(content.className)) {
+            for (let child of content.children) {
+                if (/.*(name-wrap)|(title-wrap)/.test(child.className)) {
+                    child.classList.toggle("name-in-img")
+                    child.style.width = child.clientWidth + "px"
+                    continue
+                }
+                hideOrShowFunc(child)
+            }
+            continue
+
+        }
+        hideOrShowFunc(content)
+    }
+}
+
+
+function saveSection(sectionName, extra) {
+    sessionStorage.setItem("section", JSON.stringify({"section": sectionName, "href": window.location.href, ...extra}))
+}
 function getSection() {
-    let acc = JSON.parse(sessionStorage.getItem("section"))
+    const acc = JSON.parse(sessionStorage.getItem("section"))
     return acc && acc.section
+}
+
+function saveFetchPath(subSection) {
+    sessionStorage.setItem("fetchPath", JSON.stringify(subSection))
+}
+
+function getFetchPath() {
+    return JSON.parse(sessionStorage.getItem("fetchPath"))
+}
+
+function rmFetchPath() {
+    sessionStorage.removeItem("fetchPath")
 }
 
 function getCurrentApiUrl() {
@@ -459,7 +593,7 @@ function updateQueryStringParameter(uri, key, value) {
     else {
       return uri + separator + key + "=" + value;
     }
-} 
+}
 
 ReactDOM.render(
     <Account/>,

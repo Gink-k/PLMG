@@ -1,7 +1,7 @@
 * { margin:0;}
 
 html, body, #wrap, #content_container{
-	height: 100%;
+	min-height: 100%;
 	width: 100%;
 }
 
@@ -778,7 +778,7 @@ footer .container.copyright a {
 	display: inline-block;
 	border-right: 1px solid rgb(212, 212, 212);
 	min-height: 100vh;
-	height: 100%;
+	height: auto;
 	vertical-align: top;
 }
 
@@ -814,7 +814,7 @@ footer .container.copyright a {
 .acc-control-panel-wrap {
 	margin-bottom: 10px;
 }
-.acc-control-panel-wrap * {
+.acc-control-panel-wrap .control-btn-wrap {
 	margin-right: 4px;
 }
 
@@ -857,23 +857,65 @@ footer .container.copyright a {
 	vertical-align: top;
 }
 
+.acc-item-list-wrap {
+	position: relative;
+	transition: background-color 1s ease-in 0s;
+}
+
+.acc-item-list-wrap.header {
+	/* background-color: rgb(18, 52, 154); */
+}
+
+.acc-item-list-wrap .acc-item-list-wrap {
+	margin: 20px;
+	margin-top: 0px;
+}
+
 .acc-view {
-	transition: all 4s ease-in-out 0s;
-}
-
-.acc-item-list-wrap li {
-	border: 1px solid rgb(212, 212, 212);
-	border-bottom: none;
+	position: relative;
+	opacity: 1;
+	padding-bottom: 20px;
+	transition: border 3s ease-in 2s;
 	padding: 15px;
+	border: 10px solid rgb(212, 212, 212);
+	border-radius: 40px;
+	/* border-bottom: none; */
+	margin-bottom: 30px;
 }
 
-.acc-item-list-wrap li:last-child {
-	border-bottom: 1px solid rgb(212, 212, 212);	
+.acc-view.header {
+	/* border: solid 4px rgb(46, 55, 82) */
+	/* border: none !important; */
+	cursor: pointer;
+	margin-bottom: 0px;
+	/* padding-bottom: none; */
+	border-bottom: none;
+	border-bottom-left-radius: 25px;
+	border-bottom-right-radius: 25px;
 }
 
-.acc-item-photo-wrap img {
+.acc-item-list-wrap > div:last-of-type[class="acc-view"] {
+	border-bottom: 10px solid rgb(212, 212, 212);
+}
+
+.header-anchor:first-child {
+	border: none;
+}
+
+.acc-item-photo-wrap {
 	width: 250px;
 	height: 250px;
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	transition: width 0.6s ease-in 0s, height 0.6s ease-in 0s;
+}
+
+.acc-item-photo-wrap.img-header  {
+	height: 50px;
+	border-radius: 40px;
+	object-fit: cover;
+	transition: width 0.6s ease-in 0s, height 0.6s ease-in 0s;
 }
 
 .acc-item-date-wrap div {
@@ -894,6 +936,35 @@ footer .container.copyright a {
 /* .acc-char-content-wrap div {
 	padding-top: 10px;
 } */
+
+div[class*="content-name-wrap"] {
+	margin-top: 0px;
+	transition: all 0.7s ease-in 300ms;
+}
+
+.acc-view .name-in-img {
+	position: absolute;
+	top: 22px;
+	left: 25px;
+	background-color: white;
+	border-radius: 40px;
+	padding: 5px 15px;
+	font-size: 12px;
+}
+
+.name-in-img * {
+	display: inline-block;
+	margin-right: 4px;
+}
+
+.name-in-img p {
+	font-size: 13px;
+}
+
+.name-in-img h2::after {
+	content: ":";
+}
+
 .acc-item-prop {
 	display: block;
 	margin-bottom: 15px;
