@@ -148,7 +148,6 @@ func getUserIDFromPath(reqPath string) uint {
 	path := strings.Replace(reqPath, "/api", "", 1)
 	re := regexp.MustCompile(`/characters/([0-9]+).*`)
 	submatch := re.FindStringSubmatch(path)
-	log.Println(path, submatch)
 	if len(submatch) == 2 {
 		id, err := u.Stou(submatch[1])
 		if err == nil {

@@ -40,7 +40,7 @@ var EditAccount = func(w http.ResponseWriter, r *http.Request) map[string]interf
 	//
 	decodeFormPhoto(r, account)
 	//
-	resp := account.Edit() //Удалить персонажа
+	resp := account.Edit()
 	resp["item"] = ITEM_ACCOUNT
 	return resp
 }

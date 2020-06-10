@@ -151,7 +151,6 @@ func (account *Account) IsOwnID(ID uint) bool {
 }
 
 func Login(email, password string) map[string]interface{} {
-
 	account := &Account{}
 	err := GetDB().Table("accounts").Where("email = ?", email).First(account).Error
 	if err != nil {

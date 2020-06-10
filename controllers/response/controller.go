@@ -25,7 +25,7 @@ func convertMap(form map[string][]string) map[string]string {
 	return map_model
 }
 
-func decodeRequest(r *http.Request, model models.PlmgObject) error {
+func decodeRequest(r *http.Request, model models.PlmgBaseObject) error {
 	if r.Header.Get("Content-Type") != "" {
 		value, _ := header.ParseValueAndParams(r.Header, "Content-Type")
 		if value != "application/json" {

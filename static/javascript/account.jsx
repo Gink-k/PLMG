@@ -1,4 +1,3 @@
-const API_URL = "http://localhost:8000/api/profile"
 const IMAGE_STORAGE = "/data/images/"
 
 function Account(props) {

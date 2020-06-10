@@ -32,7 +32,7 @@ func init() {
 	}
 
 	db = conn
-	db.Debug().AutoMigrate(&Account{}, &Character{}, &History{}, &Chapter{}) //Миграция базы данных
+	db.Debug().AutoMigrate(&Account{}, &Character{}, &History{}, &Chapter{}, &Comment{}) //Миграция базы данных
 }
 
 // возвращает дескриптор объекта DB

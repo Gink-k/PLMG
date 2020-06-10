@@ -9,13 +9,17 @@ import (
 )
 
 type PlmgObject interface {
+	PlmgBaseObject
+	BuildPhotoName(extension string) string
+	SetPhotoName(photoName string)
+	SavePhotoName()
+}
+
+type PlmgBaseObject interface {
 	Create() map[string]interface{}
 	Edit() map[string]interface{}
 	Delete() map[string]interface{}
 	GetID() uint
-	BuildPhotoName(extension string) string
-	SetPhotoName(photoName string)
-	SavePhotoName()
 }
 
 type LitItem struct {
