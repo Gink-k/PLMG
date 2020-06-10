@@ -8,8 +8,9 @@ import (
 
 type Comment struct {
 	gorm.Model
-	UserID uint
-	Text   string `json:"text"`
+	UserID   uint
+	Text     string `json:"text"`
+	Location string `jspn:"location"`
 }
 
 func (comment *Comment) Create() map[string]interface{} {
@@ -49,6 +50,12 @@ func GetComment(id string) *Comment {
 func GetAllCommByUserID(user_id string) []Comment {
 	var all []Comment
 	GetDB().Table("comments").Where("user_id = ?", user_id).Find(&all)
+	return all
+}
+
+func GetAllCommByLoc(location string) []Comment {
+	var all []Comment
+	GetDB().Table("comments").Where("location = ?", location).Find(&all)
 	return all
 }
 

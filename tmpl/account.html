@@ -1,5 +1,5 @@
 {{template "header.html" .}}
-    <div id="account-data" data-id="{{.account.ID}}" data-name="{{.account.Name}}" data-surname="{{.account.Surname}}" data-photo="{{.account.Photo}}" data-createdat="{{.account.CreatedAt}}">
+    <div class="content-white-panel" id="account-data" data-id="{{.account.ID}}" data-name="{{.account.Name}}" data-surname="{{.account.Surname}}" data-photo="{{.account.Photo}}" data-createdat="{{.account.CreatedAt}}">
     </div>
 {{template "react" dict "scriptName" "account"}}
 {{template "footer.html" .}}

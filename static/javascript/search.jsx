@@ -15,7 +15,14 @@ function SearchPanel(props) {
     const formRef = React.useRef()
     const url = getCurrentApiUrl()
     React.useEffect(() => {
-        const formData = new FormData(formRef.current)
+        const formData = new FormData()
+        for (let child of formRef.current) {
+            if (child.name == "category") {
+                if (child.checked) formData.append(child.value, "true") 
+                continue
+            }
+            if (child.type != "submit") formData.append(child.name, child.value)
+        }
         fetch(url, {
             method: "POST",
             body: formData,
@@ -36,6 +43,8 @@ function SearchPanel(props) {
         <form ref={formRef}>
             <input type="text" name="search" value={request} onChange={onChange}/>
             <input type="submit"/>
+            <p><input type="checkbox" name="category" value="ch_box_chars" defaultChecked={true}/>По персонажам</p>
+            <p><input type="checkbox" name="category" value="ch_box_hists"/>По историям</p>
         </form>
     )
 }
@@ -46,11 +55,20 @@ function SearchResultPanel(props) {
     } else if (!props.isLoaded) {
         return <Wrap className="load">Идет загрузка</Wrap>
     } else {
+        const search = props.searchResult.search
+        let searchList = []
+        for (let category of search) {
+            const itemName = category.item
+            const item = category[itemName]
+            if (!item) continue
+            searchList.push(...item.map(value => {
+                const path = itemName == "characters"? value.ID : `${value.CharacterID}/histories/${value.ID}/chapters`
+                return <li key={value && value.ID+itemName}><ViewItem key={value && value.ID} item={value} path={path}/></li>
+            }))
+        }
         return (
             <ul>
-                {props.searchResult.search.map(value => {
-                    return <li key={value.ID}><ViewChar char={value}/></li>
-                })}
+                {searchList}
             </ul>
         )
     }
@@ -58,17 +76,17 @@ function SearchResultPanel(props) {
 
 // copied from characters.html
 
-function ViewChar(props) {
-    const char = props.char
+function ViewItem(props) {
+    const item = props.item || {}
     return (
-        <div class="preview-content-wrap"  style={{"background":`white url('/data/images/${char.photo}') no-repeat center`, "backgroundSize": "cover"}}>
-            <a class="preview-link" style={{"display":"block"}} href={`characters/${char.ID}`}>
+        <div class="preview-content-wrap"  style={{"background":`white url('/data/images/${item.photo}') no-repeat center`, "backgroundSize": "cover"}}>
+            <a class="preview-link" style={{"display":"block"}} href={`characters/${props.path}`}>
                 <div class="preview-char-text-info preview-text-info-wrap">
                     <div class="preview-char-name preview-title-wrap">
-                        <p>{ char.name }:</p>
+                        <p>{ item.name || item.title}:</p>
                     </div>
                     <div class="preview-char-about">
-                        <p>{ char.about }</p>
+                        <p>{ item.about }</p>
                     </div>
                 </div>
             </a>

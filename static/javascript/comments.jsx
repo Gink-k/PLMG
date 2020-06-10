@@ -8,7 +8,7 @@ function Comments(props) {
     React.useEffect(handleSubmit, [])
 
     function handleSubmit(e) {
-        const url = getCurrentApiUrl() + "/comments"
+        const url = getCurrentApiUrl() + "/comments?location=" + window.location.pathname
         e && e.preventDefault()
         fetch(url)
             .then(handleErrors)
@@ -50,12 +50,14 @@ function CommentsPanel(props) {
     }
     return (
         <Wrap className="comments-panel ">
-            {comments}
+            <h2 className="comments-title">Комментарии:</h2>
             <form className={props.className || ""} onSubmit={handleSubmit}>
                 <input type="hidden" name="user_id" value={getCurUserID()}/>
+                <input type="hidden" name="location" value={window.location.pathname}/>
                 <textarea name="text"></textarea>
                 <input type="submit" value="Сохранить"/>
             </form>
+            {comments}
         </Wrap>
     )
 }
@@ -86,7 +88,7 @@ function Comment(props) {
             <Wrap className="comment">
                 <UserInfo user={owner}/>
                 <Wrap className="comment-text">{props.value.text}</Wrap>
-                <Wrap className="comment-date">{props.value.CreatedAt}</Wrap>
+                <Wrap className="date-line-wrap comment-date">{formatDate(props.value.CreatedAt)}</Wrap>
             </Wrap>
         )
     }
@@ -124,6 +126,41 @@ function handleErrors(response) {
         throw Error(response.statusText);
     }
     return response;
+}
+
+function formatDate(date) {
+    const reqDate = new Date(date)
+    const now = new Date()
+    console.log(date)
+    function getFNum(diviver) {
+        return Math.floor(Math.abs((now - reqDate) / diviver))
+    }
+    const m = 1000 * 60,
+          dY = getFNum(m*60*24*365),
+          dM = dY? "" : now.getMonth() - reqDate.getMonth(),
+          dD = getFNum(m*60*24),
+          dH = getFNum(m*60),
+          dMin = getFNum(m)
+    return getCorrectCase([dY, dM, dD, dH, dMin])
+}
+
+function getCorrectCase(date) {
+    const cases = [["год", "года", "лет"], ["месяц", "месяца", "месяцев"], ["день", "дня", "дней"], ["час", "часа", "часов"], ["минуту", "минуты", "минут"]]
+    let res = "Только что"
+    function handleNum(num, cases) {
+        const dres = num % 10
+        if (dres == 1 && num != 11) res = num + " " + cases[0]
+        if (1 < dres && dres < 5 && !(10 < num && num < 20)) res = num + " " + cases[1]
+        if (4 < dres || dres == 0 || (10 < num && num < 20)) res = num + " " + cases[2]
+    }
+    for (let i = 0; i < date.length; i++) {
+        if (date[i]) {
+            handleNum(date[i], cases[i])
+            break
+        }
+    }
+    if (res == "Только что") return res
+    return res + " назад"
 }
 
 function getCurrentApiUrl() {

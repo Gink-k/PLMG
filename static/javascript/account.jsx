@@ -240,21 +240,21 @@ function ItemPanel(props) {
             setTimeout(() => {
                 clickedElem.style.position = "relative"
                 resolve("готово!")
-            }, delay + 50)
+            }, delay + 100)
         })
     }
 
-    function handlePrevSection(e) {
+    async function handlePrevSection(e) {
         let itemListElems = document.querySelectorAll(".acc-item-list-wrap")
         for (let elem of itemListElems) {
             if (elem.dataset.item != itemName) {
                 if (!elem.classList.contains("header"))
                     elem.hidden = true
             }
-            else animateList(this, slowlyGoDown, slowlyShow)
+            else await animateList(this, slowlyGoDown, slowlyShow)
         }
         this.removeEventListener("click", handlePrevSection)
-        setDetails(null)
+        setDetailsButton()
     }
     
     async function handleClick(e, path) {

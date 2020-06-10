@@ -84,3 +84,10 @@ func GetAllHistBy(char_id string) []History {
 	GetDB().Table("histories").Where("character_id = ?", char_id).Find(&all)
 	return all
 }
+
+func GetAllHistByName(name string) []History {
+	var all []History
+	GetDB().Table("histories").Where("title like ?", "%"+name+"%").Find(&all)
+	return all
+
+}

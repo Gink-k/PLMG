@@ -64,7 +64,7 @@ var DeleteComment = func(w http.ResponseWriter, r *http.Request) map[string]inte
 }
 
 var GetAllComments = func(w http.ResponseWriter, r *http.Request) map[string]interface{} {
-	comments := models.GetAllComments()
+	comments := models.GetAllCommByLoc(r.URL.Query().Get("location"))
 	resp := u.Message(u.SUCCESS, "Comments has been gotten")
 	item_name := ITEM_COMMENT + "s"
 	resp[item_name] = comments
