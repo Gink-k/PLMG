@@ -79,7 +79,7 @@ func GetCharacter(id string) *Character {
 
 func GetAllCharByName(name string) []Character {
 	var all []Character
-	GetDB().Table("characters").Where("name like ?", "%"+name+"%").Find(&all)
+	GetDB().Table("characters").Where("lower(name) like lower(?)", "%"+name+"%").Find(&all)
 	return all
 }
 

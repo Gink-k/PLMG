@@ -87,7 +87,7 @@ func GetAllHistBy(char_id string) []History {
 
 func GetAllHistByName(name string) []History {
 	var all []History
-	GetDB().Table("histories").Where("title like ?", "%"+name+"%").Find(&all)
+	GetDB().Table("histories").Where("lower(title) like lower(?)", "%"+name+"%").Find(&all)
 	return all
 
 }

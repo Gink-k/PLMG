@@ -41,7 +41,7 @@
 							{{if .user.IsLogged}}
 								<div id="logout-form-container">
 									<form action="/logout" enctype="multipart/form-data" method="POST">
-										<input type="hidden" name="location" value="/" class="auth-from-location"/>
+										<input type="hidden" name="location" value="." class="auth-from-location"/>
 										<input type="submit" class="item-control-button" value="Выйти"/>
 									</form>
 								</div>
@@ -52,7 +52,7 @@
 						<div id="login-form-container" {{if .LoginWarning}}style="display:block;"{{end}}>
 							<div>
 								<form action="/login" enctype="multipart/form-data" method="POST">
-									<input type="hidden" name="location" value=".." class="auth-from-location"/>
+									<input type="hidden" name="location" value="." class="auth-from-location"/>
 									<label for="l_email">Email:</label><br>
 									<input type="email" id="l_login" name="email"><br>
 									<label for="l_password">Password:</label><br>

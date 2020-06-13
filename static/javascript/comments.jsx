@@ -11,7 +11,6 @@ function Comments(props) {
         const url = getCurrentApiUrl() + "/comments?location=" + window.location.pathname
         e && e.preventDefault()
         fetch(url)
-            .then(handleErrors)
             .then(res => res.json())
             .then(
                 (result) => {
@@ -20,13 +19,12 @@ function Comments(props) {
                     setIsLoaded(true)
                 }, 
                 (reason) => {setError(reason)})
-            .catch(reason => setError(reason))
     }
  
     if (error) {
         return <Wrap className="error">Произошла ошибка, невозможно получить данные с сервера!</Wrap>
     } else if (!isLoaded) {
-        return <Wrap className="load">Идет загрузка</Wrap>
+        return <Wrap className="load"/>
     } else {
         return <CommentsPanel comments={comments} handleSubmit={handleSubmit}/>
     }
@@ -82,7 +80,7 @@ function Comment(props) {
     if (error) {
         return <Wrap className="error">Произошла ошибка, невозможно получить данные с сервера!{error}</Wrap>
     } else if (!isLoaded) {
-        return <Wrap className="load">Идет загрузка</Wrap>
+        return <Wrap className="load"/>
     } else {
         return (
             <Wrap className="comment">
@@ -131,7 +129,6 @@ function handleErrors(response) {
 function formatDate(date) {
     const reqDate = new Date(date)
     const now = new Date()
-    console.log(date)
     function getFNum(diviver) {
         return Math.floor(Math.abs((now - reqDate) / diviver))
     }
@@ -170,5 +167,5 @@ function getCurrentApiUrl() {
 
 ReactDOM.render(
     <Comments/>,
-    document.getElementById("comments")
+    document.getElementById("comments-section")
 )

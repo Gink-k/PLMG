@@ -139,15 +139,15 @@ function CharInfoPanel(props) {
             result => {
                 setResponse(result)
                 setIsLoaded(true)
-            })
-        .catch(reason => setError(reason))
+            },
+            reason => setError(reason))
         setPathName(path)
     }
 
     if (error) {
-        return <Wrap className="error">Произошла ошибка, невозможно получить данные с сервера!{error}</Wrap>
+        return <Wrap className="error">Произошла ошибка, невозможно получить данные с сервера!</Wrap>
     } else if (!isLoaded) {
-        return <Wrap className="load">Идет загрузка</Wrap>
+        return <Wrap className="load"/>
     } else {
         return <Wrap className="profile-panel "><ItemPanel user={props.user} response={response} pathName={pathName} handleServerInfo={handleServerInfo}/></Wrap>
     }

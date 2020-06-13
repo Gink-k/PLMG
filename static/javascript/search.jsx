@@ -31,9 +31,8 @@ function SearchPanel(props) {
         .then(
             result => {
                 props.setSearchResult(result)
-                props.setIsLoaded(true)
-            })
-        .catch(reason => props.setError(reason))
+                props.setIsLoaded(true)},
+            reason => props.setError(reason))
     }, [request])
     function onChange(event) {
         event.preventDefault()
@@ -42,9 +41,11 @@ function SearchPanel(props) {
     return (
         <form ref={formRef}>
             <input type="text" name="search" value={request} onChange={onChange}/>
-            <input type="submit"/>
-            <p><input type="checkbox" name="category" value="ch_box_chars" defaultChecked={true}/>По персонажам</p>
-            <p><input type="checkbox" name="category" value="ch_box_hists"/>По историям</p>
+            {/* <input type="submit"/> */}
+            <fieldset>
+                <label><input type="checkbox" name="category" value="ch_box_chars" defaultChecked={true}/>По персонажам</label>
+                <label><input type="checkbox" name="category" value="ch_box_hists"/>По историям</label>
+            </fieldset>
         </form>
     )
 }
@@ -78,6 +79,7 @@ function SearchResultPanel(props) {
 
 function ViewItem(props) {
     const item = props.item || {}
+    const about = item.about && <div class="preview-char-about"><p>{ item.about }</p></div>
     return (
         <div class="preview-content-wrap"  style={{"background":`white url('/data/images/${item.photo}') no-repeat center`, "backgroundSize": "cover"}}>
             <a class="preview-link" style={{"display":"block"}} href={`characters/${props.path}`}>
@@ -85,9 +87,7 @@ function ViewItem(props) {
                     <div class="preview-char-name preview-title-wrap">
                         <p>{ item.name || item.title}:</p>
                     </div>
-                    <div class="preview-char-about">
-                        <p>{ item.about }</p>
-                    </div>
+                    {about}
                 </div>
             </a>
         </div>

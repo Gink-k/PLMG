@@ -1,3 +1,16 @@
+window.addEventListener("load", () => {
+    let locations = document.querySelectorAll('input[name="location"]');
+    let href = window.location.href
+    for (let loc of locations) {
+        switch (loc.value) {
+            case ".": loc.value = href
+                break
+            case "..": loc.value = href.slice(0, href.lastIndexOf("/")) 
+                break
+        }
+    }
+})
+
 window.addEventListener("click", (event) => {
     let login_form = this.document.querySelector('#login-form-container');
     if (event.target.closest('#login-btn-wrap')) {

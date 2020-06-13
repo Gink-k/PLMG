@@ -59,11 +59,12 @@ var WebJwtAuth = func(next http.Handler) http.Handler {
 			if err != nil {
 				if isSecureReq(reqMethod, reqPath) {
 					next.ServeHTTP(w, r)
-					return
-				} else {
+				} else if strings.HasPrefix(reqPath, "/api") {
 					http.Error(w, "Missing auth token", http.StatusInternalServerError)
-					return
+				} else {
+					http.Redirect(w, r, "/registration", http.StatusFound)
 				}
+				return
 			}
 			tokenHeader = cookie1.Value
 		}
