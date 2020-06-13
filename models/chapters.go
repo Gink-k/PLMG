@@ -9,7 +9,6 @@ type Chapter struct {
 	LitItem     `gorm:"embedded"`
 	Title       string `json:"title"`
 	Text        string `json:"text"`
-	Number      uint
 	CharacterID uint
 	HistoryID   uint
 }

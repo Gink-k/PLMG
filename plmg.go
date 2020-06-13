@@ -50,6 +50,8 @@ func main() {
 
 	r.HandleFunc("/api/search", api.ApiHandler(contr.SearchHandler)).Methods("POST")
 
+	//r.Handle("/frontend/", http.FileServer(http.Dir("./frontend/dist")))
+	r.PathPrefix("/frontend/").Handler(http.StripPrefix("/frontend/dist/", http.FileServer(http.Dir("./frontend/dist"))))
 	r.PathPrefix("/static/").Handler(http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
 	r.PathPrefix("/data/").Handler(http.StripPrefix("/data/", http.FileServer(http.Dir("data"))))
 	r.HandleFunc("/", site.MainPageHandler)

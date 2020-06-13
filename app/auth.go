@@ -14,41 +14,9 @@ import (
 	"github.com/dgrijalva/jwt-go"
 )
 
-var JwtAuthentication = func(next http.Handler) http.Handler {
-
-	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-
-		notAuth := []string{"/", "/characters", "/login", "/data/images/", "/static/stylesheets/style.css"} //Список эндпоинтов, для которых не требуется авторизация
-		requestPath := r.URL.Path                                                                           //текущий путь запроса
-
-		//проверяем, не требует ли запрос аутентификации, обслуживаем запрос, если он не нужен
-		for _, value := range notAuth {
-
-			if value == requestPath {
-				next.ServeHTTP(w, r)
-				return
-			}
-		}
-
-		tokenHeader := r.Header.Get("X-Session-Token")
-		tk, err := getToken(tokenHeader)
-		if err != nil {
-			response := u.Message(u.ERROR, err.Error())
-			u.Respond(w, response)
-			return
-		}
-		//Всё прошло хорошо, продолжаем выполнение запроса
-		log.Printf("User %d", tk.UserId) //Полезно для мониторинга
-		ctx := context.WithValue(r.Context(), "user", tk.UserId)
-		r = r.WithContext(ctx)
-		next.ServeHTTP(w, r) //передать управление следующему обработчику!
-	})
-}
-
 var WebJwtAuth = func(next http.Handler) http.Handler {
 
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		// apiPrefix := "/api"
 		const TOKEN_NAME = "X-Session-Token"
 		reqPath := r.URL.Path
 		reqMethod := r.Method
@@ -126,7 +94,7 @@ func isSecureReq(reqMethod string, reqPath string) bool {
 	isWeb := strings.HasPrefix(reqPath, webPrefix) || reqPath == "/"
 
 	noAuth := []string{"/login", "/registration"}
-	static := []string{"/static", "/data"}
+	static := []string{"/static", "/data", "/frontend"}
 	noAuthFlag := u.ArrContain(noAuth, reqPath)
 	for _, val := range static {
 		if strings.HasPrefix(reqPath, val) {

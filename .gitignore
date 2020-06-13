@@ -1,3 +1,4 @@
 .env
 trash
 plmg.dump
+node_modules

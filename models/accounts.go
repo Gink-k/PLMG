@@ -191,14 +191,3 @@ func GetAllUsers() []Account {
 	}
 	return all
 }
-
-// func GetUserByToken(token string) *Account {
-// 	acc := &Account{}
-// 	GetDB().Table("accounts").Where("token = ?", token).First(acc)
-// 	if acc.Email == "" { //Пользователь не найден!
-// 		return nil
-// 	}
-
-// 	acc.Password = ""
-// 	return acc
-// }
