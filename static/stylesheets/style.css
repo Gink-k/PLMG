@@ -682,6 +682,24 @@ footer .container.copyright a {
 	word-wrap: break-word;
 }
 
+.scroll-arrow {
+	position: fixed;
+	top: 88%;
+	right: calc(5% - 33px);
+	width: 66px;
+	opacity: 0.6;
+	transition: transform 1s ease 0s;
+}
+
+.scroll-arrow:hover {
+	opacity: 1;
+	cursor: pointer;
+}
+
+.scroll-arrow.rotate180 {
+	transform: rotate(180deg);
+}
+
 /*##############*/
 /* chapter-edit */
 /*##############*/

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" height="170" width="160" >
+    <defs>
+    <style type="text/css"><![CDATA[
+        #arrow-back {
+            stroke: black;
+        }
+        #arrow-rod {
+            fill: none;
+            stroke: black;
+        }
+    ]]>
+    </style>
+    </defs>
+    <polyline points="100 65, 40 110, 100 155" stroke-width="20"
+        stroke-linecap="square" fill="none" stroke-linejoin="roung" id="arrow-back"/>
+    <polyline points="90 85 200 85 200 125 90 125" stroke-width="5"
+        stroke-linecap="square" fill="none" stroke-linejoin="roung" id="arrow-rod"/>      
+</svg>

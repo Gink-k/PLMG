@@ -1,7 +1,7 @@
  {{template "header.html" .}}
  <div class="topside">
     <div class="chapters-wrap">
-        <div class="ch-topside-block" style="background:white url('../../../../data/images/{{.history.Photo}}') no-repeat center; background-size: cover;">
+        <div class="ch-topside-block" style="background:white url('/data/images/{{.history.Photo}}') no-repeat center; background-size: cover;">
             <div class="ch-hist-title-wrap">
                 <h1>{{ .history.Title }}</h1>
             </div>
@@ -36,7 +36,9 @@
                 {{end}}
         {{end}}
     </div>
+    <div><img class="scroll-arrow" src="/static/images/arrow.svg"/></div>
     <div id="comments-section" class="content-white-panel"></div>
+    <script src="/static/javascript/arrow.js" type="text/javascript"></script>
 </div>
 {{template "react" dict "scriptName" "comments"}}
 {{template "footer.html"}}

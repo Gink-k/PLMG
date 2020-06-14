@@ -16,7 +16,7 @@
                         <div class="preview-history-chapters">
                             {{range $i, $chapter := $hist_obj.Chapters}}
                                 <div class="preview-history-chapters-content">
-                                    <a href="histories/{{$hist_obj.History.ID}}/chapters" style="display: block;">{{inc $i}}. {{$chapter.Title}}</a>
+                                    <a href="histories/{{$hist_obj.History.ID}}/chapters#{{$chapter.ID}}" style="display: block;">{{inc $i}}. {{$chapter.Title}}</a>
                                 </div>
                             {{end}}
                             {{if $.user.IsAdmin}}
