@@ -40,7 +40,9 @@ func main() {
 	r.HandleFunc(url, api.ApiHandler(contr.ViewAccount)).Methods("GET")
 	r.HandleFunc(url, api.ApiHandler(contr.EditAccount)).Methods("PUT")
 	r.HandleFunc(url, api.ApiHandler(contr.DeleteAccount)).Methods("DELETE")
-	r.HandleFunc(url, api.ApiHandler(contr.CreateAccount)).Methods("POST")
+	r.HandleFunc("/api/profile", api.ApiHandler(contr.CreateAccount)).Methods("POST")
+	r.HandleFunc("/api/login", api.ApiHandler(contr.Authenticate)).Methods("POST")
+
 	url = "/api/comments"
 	r.HandleFunc(url+"/{comm_id:"+pattern, api.ApiHandler(contr.ViewComment)).Methods("GET")
 	r.HandleFunc(url+"/{comm_id:"+pattern, api.ApiHandler(contr.EditComment)).Methods("PUT")

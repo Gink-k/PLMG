@@ -31,7 +31,7 @@ var EditComment = func(w http.ResponseWriter, r *http.Request) map[string]interf
 	if err := decodeRequest(r, comment); err != nil {
 		return invalidRequestMsg()
 	}
-	resp = comment.Edit() //Обновить персонажа
+	resp = comment.Edit() //Обновить комментарий
 	resp["item"] = ITEM_COMMENT
 	return resp
 }
