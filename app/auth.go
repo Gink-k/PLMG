@@ -93,7 +93,7 @@ func isSecureReq(reqMethod string, reqPath string) bool {
 
 	isWeb := strings.HasPrefix(reqPath, webPrefix) || reqPath == "/"
 
-	noAuth := []string{"/login", "/registration"}
+	noAuth := []string{"/login", "/registration", "/api/login"}
 	static := []string{"/static", "/data", "/frontend"}
 	noAuthFlag := u.ArrContain(noAuth, reqPath)
 	for _, val := range static {

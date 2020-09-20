@@ -142,7 +142,6 @@ func (account *Account) IsOwnProfile(reqPath string) bool {
 			return true
 		}
 	}
-
 	return false
 }
 
