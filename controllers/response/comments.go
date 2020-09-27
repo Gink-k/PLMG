@@ -16,8 +16,8 @@ var ViewComment = func(w http.ResponseWriter, r *http.Request) map[string]interf
 		return notExMsg(ITEM_COMMENT)
 	}
 	resp = u.Message(u.SUCCESS, "Comment has been gotten")
-	resp[ITEM_COMMENT] = comment
-	resp["item"] = ITEM_COMMENT
+	resp["item"] = comment
+	resp["type"] = ITEM_COMMENT
 	return resp
 }
 
@@ -32,7 +32,7 @@ var EditComment = func(w http.ResponseWriter, r *http.Request) map[string]interf
 		return invalidRequestMsg()
 	}
 	resp = comment.Edit() //Обновить комментарий
-	resp["item"] = ITEM_COMMENT
+	resp["type"] = ITEM_COMMENT
 	return resp
 }
 
@@ -46,7 +46,7 @@ var CreateComment = func(w http.ResponseWriter, r *http.Request) map[string]inte
 		return invalidRequestMsg()
 	}
 	resp := comment.Create() //Создать персонажа
-	resp["item"] = ITEM_COMMENT
+	resp["type"] = ITEM_COMMENT
 	return resp
 }
 
@@ -59,7 +59,7 @@ var DeleteComment = func(w http.ResponseWriter, r *http.Request) map[string]inte
 	}
 
 	resp = comment.Delete() //Удалить персонажа
-	resp["item"] = ITEM_COMMENT
+	resp["type"] = ITEM_COMMENT
 	return resp
 }
 
@@ -67,7 +67,7 @@ var GetAllComments = func(w http.ResponseWriter, r *http.Request) map[string]int
 	comments := models.GetAllCommByLoc(r.URL.Query().Get("location"))
 	resp := u.Message(u.SUCCESS, "Comments has been gotten")
 	item_name := ITEM_COMMENT + "s"
-	resp[item_name] = comments
-	resp["item"] = item_name
+	resp["item"] = comments
+	resp["type"] = item_name
 	return resp
 }

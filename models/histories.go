@@ -8,7 +8,8 @@ import (
 //структура для персонажа
 type History struct {
 	LitItem     `gorm:"embedded"`
-	Title       string `json:"title"`
+	Title       string   `json:"title"`
+	ChapterList []string `sql:"-"`
 	CharacterID uint
 }
 
@@ -21,7 +22,7 @@ func (history *History) Create() map[string]interface{} {
 	}
 
 	response := u.Message(u.SUCCESS, "History has been created")
-	response["history"] = history
+	response["item"] = history
 	return response
 }
 
@@ -29,7 +30,7 @@ func (history *History) Edit() map[string]interface{} {
 	GetDB().Save(history)
 
 	response := u.Message(u.SUCCESS, "History has been edited")
-	response["history"] = history
+	response["item"] = history
 	return response
 }
 
@@ -41,7 +42,7 @@ func (history *History) Delete() map[string]interface{} {
 	GetDB().Delete(history)
 	removePhoto(history.Photo)
 	response := u.Message(u.SUCCESS, "History has been deleted")
-	response["history"] = history
+	response["item"] = history
 	return response
 }
 
@@ -82,6 +83,10 @@ func GetAllHistories() []History {
 func GetAllHistBy(char_id string) []History {
 	var all []History
 	GetDB().Table("histories").Where("character_id = ?", char_id).Find(&all)
+	for i := range all {
+		GetDB().Table("chapters").
+			Where("history_id = ?", all[i].ID).Pluck("title", &all[i].ChapterList)
+	}
 	return all
 }
 

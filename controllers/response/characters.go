@@ -18,8 +18,8 @@ var ViewCharacter = func(w http.ResponseWriter, r *http.Request) map[string]inte
 	}
 
 	resp = u.Message(u.SUCCESS, "Character has been gotten")
-	resp[ITEM_CHARACTER] = character
-	resp["item"] = ITEM_CHARACTER
+	resp["item"] = character
+	resp["type"] = ITEM_CHARACTER
 	return resp
 }
 
@@ -38,7 +38,7 @@ var EditCharacter = func(w http.ResponseWriter, r *http.Request) map[string]inte
 	decodeFormPhoto(r, character)
 	//
 	resp = character.Edit() //Обновить персонажа
-	resp["item"] = ITEM_CHARACTER
+	resp["type"] = ITEM_CHARACTER
 	return resp
 }
 
@@ -56,7 +56,7 @@ var CreateCharacter = func(w http.ResponseWriter, r *http.Request) map[string]in
 	decodeFormPhoto(r, character)
 	character.SavePhotoName()
 	//
-	resp["item"] = ITEM_CHARACTER
+	resp["type"] = ITEM_CHARACTER
 	return resp
 }
 
@@ -69,7 +69,7 @@ var DeleteCharacter = func(w http.ResponseWriter, r *http.Request) map[string]in
 	}
 
 	resp = character.Delete() //Удалить персонажа
-	resp["item"] = ITEM_CHARACTER
+	resp["type"] = ITEM_CHARACTER
 	return resp
 }
 
@@ -77,7 +77,7 @@ var GetAllCharacters = func(w http.ResponseWriter, r *http.Request) map[string]i
 	characters := models.GetAllCharBy(getUserIDFromReq(r))
 	resp := u.Message(u.SUCCESS, "Characters has been gotten")
 	item_name := ITEM_CHARACTER + "s"
-	resp[item_name] = characters
-	resp["item"] = item_name
+	resp["item"] = characters
+	resp["type"] = item_name
 	return resp
 }

@@ -25,7 +25,7 @@ func SiteHandler(fn func(w http.ResponseWriter, r *http.Request) map[string]inte
 			http.Error(w, response["message"].(string), http.StatusInternalServerError)
 			return
 		}
-		tmpl := response["item"].(string)
+		tmpl := response["type"].(string)
 		user := getUser(r)
 		response["user"] = user
 		response["currentLoc"] = r.URL.Path
@@ -71,7 +71,7 @@ func RegistrationHandler(w http.ResponseWriter, r *http.Request) {
 			response = rawContr.CreateAccount(w, r)
 			status := response["status"]
 			if status == u.SUCCESS {
-				saveTokenInCookie(w, response["account"].(*models.Account).Token)
+				saveTokenInCookie(w, response["item"].(*models.Account).Token)
 				http.Redirect(w, r, "/", http.StatusFound)
 				return
 			} else if status == u.WARNING {
@@ -87,7 +87,7 @@ func AuthenticationHandler(w http.ResponseWriter, r *http.Request) {
 	response := rawContr.Authenticate(w, r)
 	status := response["status"]
 	if status == u.SUCCESS {
-		saveTokenInCookie(w, response["account"].(*models.Account).Token)
+		saveTokenInCookie(w, response["item"].(*models.Account).Token)
 	} else if status == u.WARNING {
 		setCookie(w, LOGIN_WARNING, response["message"].(string), IMMEDIATE_TIME)
 	}

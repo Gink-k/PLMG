@@ -9,7 +9,7 @@
         </div>
         {{$index := 0}}
         {{$edit := $.params.Get "edit"}}
-            {{range .chapters}}
+            {{range .item}}
                 {{$index = inc $index}}
                 {{$data := dict "index" $index "chapter" . "user" $.user "currentLoc" $.currentLoc}}
                 {{if or (eq $edit "") (ne $edit .Title)}}

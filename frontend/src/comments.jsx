@@ -15,8 +15,7 @@ function Comments(props) {
             .then(res => res.json())
             .then(
                 (result) => {
-                    const itemName = result.item
-                    setComments(result[itemName])
+                    setComments(result.item)
                     setIsLoaded(true)
                 }, 
                 (reason) => {setError(reason)})
@@ -71,8 +70,7 @@ function Comment(props) {
         fetch(url)
         .then(res => res.json())
         .then(result => {
-            const itemName = result.item
-            setOwner(result[itemName])
+            setOwner(result.item)
             setIsLoaded(true)
         })
         .catch(reason => setError(reason))

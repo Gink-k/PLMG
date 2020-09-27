@@ -23,7 +23,7 @@ func (character *Character) Create() map[string]interface{} {
 	}
 
 	response := u.Message(u.SUCCESS, "Character has been created")
-	response["character"] = character
+	response["item"] = character
 	return response
 }
 
@@ -31,7 +31,7 @@ func (character *Character) Edit() map[string]interface{} {
 	GetDB().Save(character)
 
 	response := u.Message(u.SUCCESS, "Character has been edited")
-	response["character"] = character
+	response["item"] = character
 	return response
 }
 
@@ -43,7 +43,7 @@ func (character *Character) Delete() map[string]interface{} {
 	GetDB().Delete(character)
 	removePhoto(character.Photo)
 	response := u.Message(u.SUCCESS, "Character has been deleted")
-	response["character"] = character
+	response["item"] = character
 	return response
 }
 

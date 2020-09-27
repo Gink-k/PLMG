@@ -8,7 +8,7 @@ import (
 
 var DefaultHandler = func(w http.ResponseWriter, r *http.Request, itemName string) map[string]interface{} {
 	resp := u.Message(u.SUCCESS, itemName+" has been gotten")
-	resp["item"] = itemName
+	resp["type"] = itemName
 	return resp
 }
 

@@ -1,7 +1,7 @@
 {{template "header.html" .}}
     <div class="topside">
         <ul>
-            {{range .characters}}
+            {{range .item}}
                 <li class="char-list-item">
                     <div class="preview-content-wrap"  style="background:white url('/data/images/{{.Photo}}') no-repeat center; background-size: cover;">
                         <a class="preview-link" style="display:block" href="characters/{{.ID}}">

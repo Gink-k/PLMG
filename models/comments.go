@@ -19,21 +19,21 @@ func (comment *Comment) Create() map[string]interface{} {
 		return u.Message(u.ERROR, "Failed to create comment, connection error.")
 	}
 	response := u.Message(u.SUCCESS, "Comment has been created")
-	response["comment"] = comment
+	response["item"] = comment
 	return response
 }
 
 func (comment *Comment) Edit() map[string]interface{} {
 	GetDB().Save(comment)
 	response := u.Message(u.SUCCESS, "Comment has been edited")
-	response["comment"] = comment
+	response["item"] = comment
 	return response
 }
 
 func (comment *Comment) Delete() map[string]interface{} {
 	GetDB().Delete(comment)
 	response := u.Message(u.SUCCESS, "Comment has been deleted")
-	response["comment"] = comment
+	response["item"] = comment
 	return response
 }
 

@@ -87,14 +87,14 @@ func (account *Account) Create() map[string]interface{} {
 	account.Password = "" //удалить пароль
 
 	response := u.Message(u.SUCCESS, "Account has been created")
-	response["account"] = account
+	response["item"] = account
 	return response
 }
 
 func (account *Account) Edit() map[string]interface{} {
 	GetDB().Save(account)
 	response := u.Message(u.SUCCESS, "Chapter has been edited")
-	response["account"] = account
+	response["item"] = account
 	return response
 }
 
@@ -102,7 +102,7 @@ func (account *Account) Delete() map[string]interface{} {
 	GetDB().Delete(account)
 	removePhoto(account.Photo)
 	response := u.Message(u.SUCCESS, "Chapter has been deleted")
-	response["account"] = account
+	response["item"] = account
 	return response
 }
 
@@ -171,7 +171,7 @@ func Login(email, password string) map[string]interface{} {
 	tokenString, _ := token.SignedString([]byte(os.Getenv("token_password")))
 	account.Token = tokenString // Сохраните токен в ответе
 	resp := u.Message(u.SUCCESS, "Logged In")
-	resp["account"] = account
+	resp["item"] = account
 	return resp
 }
 

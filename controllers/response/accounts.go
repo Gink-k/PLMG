@@ -22,8 +22,8 @@ var ViewAccount = func(w http.ResponseWriter, r *http.Request) map[string]interf
 	}
 
 	resp = u.Message(u.SUCCESS, "Account has been gotten")
-	resp[ITEM_ACCOUNT] = account
-	resp["item"] = ITEM_ACCOUNT
+	resp["item"] = account
+	resp["type"] = ITEM_ACCOUNT
 	return resp
 }
 
@@ -41,7 +41,7 @@ var EditAccount = func(w http.ResponseWriter, r *http.Request) map[string]interf
 	decodeFormPhoto(r, account)
 	//
 	resp := account.Edit()
-	resp["item"] = ITEM_ACCOUNT
+	resp["type"] = ITEM_ACCOUNT
 	return resp
 }
 
@@ -60,7 +60,7 @@ var CreateAccount = func(w http.ResponseWriter, r *http.Request) map[string]inte
 	decodeFormPhoto(r, account)
 	account.SavePhotoName()
 	//
-	resp["item"] = ITEM_ACCOUNT
+	resp["type"] = ITEM_ACCOUNT
 	return resp
 }
 
@@ -71,7 +71,7 @@ var DeleteAccount = func(w http.ResponseWriter, r *http.Request) map[string]inte
 	}
 	account := models.GetUser(id)
 	resp := account.Delete() //Удалить персонажа
-	resp["item"] = ITEM_ACCOUNT
+	resp["type"] = ITEM_ACCOUNT
 	return resp
 }
 
@@ -82,7 +82,7 @@ var Authenticate = func(w http.ResponseWriter, r *http.Request) map[string]inter
 		return invalidRequestMsg()
 	}
 	resp := models.Login(account.Email, account.Password)
-	resp["item"] = ITEM_ACCOUNT
+	resp["type"] = ITEM_ACCOUNT
 	return resp
 }
 
@@ -91,7 +91,7 @@ var Logout = func(w http.ResponseWriter, r *http.Request) map[string]interface{}
 	cookie1 := &http.Cookie{Name: "X-Session-Token", Value: "logout", Expires: expires, HttpOnly: false}
 	http.SetCookie(w, cookie1)
 	resp := u.Message(u.SUCCESS, "Logged out")
-	resp["item"] = ITEM_ACCOUNT
+	resp["type"] = ITEM_ACCOUNT
 	return resp
 }
 
@@ -107,7 +107,7 @@ var SetUserAsAdmin = func(w http.ResponseWriter, r *http.Request) map[string]int
 	}
 	account.Group = models.ADMIN
 	resp := account.Edit()
-	resp["item"] = ITEM_ACCOUNT
+	resp["type"] = ITEM_ACCOUNT
 	return resp
 }
 
@@ -115,7 +115,7 @@ var GetAllAccounts = func(w http.ResponseWriter, r *http.Request) map[string]int
 	users := models.GetAllUsers()
 	resp := u.Message(u.SUCCESS, "Users has been gotten")
 	item_key := ITEM_ACCOUNT + "s"
-	resp[item_key] = users
-	resp["item"] = item_key
+	resp["item"] = users
+	resp["type"] = item_key
 	return resp
 }

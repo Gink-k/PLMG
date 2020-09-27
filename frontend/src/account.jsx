@@ -161,8 +161,8 @@ function ItemPanel(props) {
     let [items, itemName] = [{}, ""]
     let elements = []
     if (props.response) {
-        itemName = props.response.item
-        items = props.response[itemName]
+        itemName = props.response.type
+        items = props.response.item
     }
     React.useEffect(() => {
         const idStart = props.idStart || 0
@@ -500,7 +500,7 @@ function ComponentsWrapper(props) {
 
 function LabelAdder(props) {
     const comps = props.children.map((value, index) => {
-        return <label for={value.id}>{props.labels[index]}{value}</label>
+        return <label htmlFor={value.id} key={index}>{props.labels[index]}{value}</label>
     })
     return comps
 }

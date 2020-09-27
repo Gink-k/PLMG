@@ -3,7 +3,7 @@
         <div class="item-content-wrap">
             {{$edit := .params.Get "edit"}}
                 {{if and $edit .user.IsAdmin}}
-                    {{template "char-edit" .character}}
+                    {{template "char-edit" .item}}
                 {{else}}
                     {{template "char-view" .}}
                 {{end}}

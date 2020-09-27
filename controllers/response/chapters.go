@@ -38,8 +38,8 @@ var ViewChapter = func(w http.ResponseWriter, r *http.Request) map[string]interf
 		return notExMsg(ITEM_CHAPTER)
 	}
 	resp := u.Message(u.SUCCESS, "Chapter has been gotten")
-	resp[ITEM_CHAPTER] = chapter
-	resp["item"] = ITEM_CHAPTER
+	resp["item"] = chapter
+	resp["type"] = ITEM_CHAPTER
 	return resp
 }
 
@@ -59,7 +59,7 @@ var EditChapter = func(w http.ResponseWriter, r *http.Request) map[string]interf
 	decodeFormPhoto(r, chapter)
 	//
 	resp := chapter.Edit() //Обновить историю
-	resp["item"] = ITEM_CHAPTER
+	resp["type"] = ITEM_CHAPTER
 	return resp
 }
 
@@ -87,7 +87,7 @@ var CreateChapter = func(w http.ResponseWriter, r *http.Request) map[string]inte
 	decodeFormPhoto(r, chapter)
 	chapter.SavePhotoName()
 	//
-	resp["item"] = ITEM_CHAPTER
+	resp["type"] = ITEM_CHAPTER
 	return resp
 }
 
@@ -103,7 +103,7 @@ var DeleteChapter = func(w http.ResponseWriter, r *http.Request) map[string]inte
 		return notExMsg(ITEM_CHAPTER)
 	}
 	resp = chapter.Delete() //Удалить персонажа
-	resp["item"] = ITEM_CHAPTER
+	resp["type"] = ITEM_CHAPTER
 	return resp
 }
 
@@ -116,8 +116,8 @@ var GetAllChapters = func(w http.ResponseWriter, r *http.Request) map[string]int
 	history := models.GetHistory(hist_id, char_id)
 	resp := u.Message(u.SUCCESS, "Chapters has been gotten")
 	item_name := ITEM_CHAPTER + "s"
-	resp[item_name] = chapters
+	resp["item"] = chapters
 	resp["history"] = history
-	resp["item"] = item_name
+	resp["type"] = item_name
 	return resp
 }

@@ -1,7 +1,7 @@
 {{template "header.html" .}}
     <div class="topside">
         <ul>
-            {{range $_, $hist_obj := .histories}}
+            {{range $_, $hist_obj := .item}}
                 <li>
                     <div class="preview-content-wrap" style="background:white">
                         <a style="display:block" href="histories/{{$hist_obj.History.ID}}{{if not $.user.IsAdmin}}/chapters{{end}}">

@@ -31,7 +31,7 @@ var ViewHistory = func(w http.ResponseWriter, r *http.Request) map[string]interf
 	}
 	resp := u.Message(u.SUCCESS, "History has been gotten")
 	resp[ITEM_HISTORY] = history
-	resp["item"] = ITEM_HISTORY
+	resp["type"] = ITEM_HISTORY
 	return resp
 }
 
@@ -51,7 +51,7 @@ var EditHistory = func(w http.ResponseWriter, r *http.Request) map[string]interf
 	decodeFormPhoto(r, history)
 	//
 	resp := history.Edit() //Обновить историю
-	resp["item"] = ITEM_HISTORY
+	resp["type"] = ITEM_HISTORY
 	return resp
 }
 
@@ -70,7 +70,7 @@ var CreateHistory = func(w http.ResponseWriter, r *http.Request) map[string]inte
 	decodeFormPhoto(r, history)
 	history.SavePhotoName()
 	//
-	resp["item"] = ITEM_HISTORY
+	resp["type"] = ITEM_HISTORY
 	return resp
 }
 
@@ -88,7 +88,7 @@ var DeleteHistory = func(w http.ResponseWriter, r *http.Request) map[string]inte
 	}
 
 	resp = history.Delete() //Удалить историю
-	resp["item"] = ITEM_HISTORY
+	resp["type"] = ITEM_HISTORY
 	return resp
 }
 
@@ -99,8 +99,8 @@ var GetAllHistories = func(w http.ResponseWriter, r *http.Request) map[string]in
 	}
 	histories := models.GetAllHistBy(char_id)
 	resp := u.Message(u.SUCCESS, "Histories has been gotten")
-	resp["histories"] = histories
-	resp["item"] = "histories"
+	resp["item"] = histories
+	resp["type"] = "histories"
 	return resp
 }
 
@@ -124,7 +124,7 @@ var GetAllHistoriesWithChaps = func(w http.ResponseWriter, r *http.Request) map[
 	}
 
 	resp := u.Message(u.SUCCESS, "Histories has been gotten")
-	resp["histories"] = finHistories
-	resp["item"] = "histories"
+	resp["item"] = finHistories
+	resp["type"] = "histories"
 	return resp
 }
