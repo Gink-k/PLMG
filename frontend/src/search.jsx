@@ -61,7 +61,7 @@ function SearchResultPanel(props) {
     } else if (!props.isLoaded) {
         return <Wrap className="load">Идет загрузка</Wrap>
     } else {
-        const search = props.searchResult.search
+        const search = props.searchResult.item
         let searchList = []
         for (let category of search) {
             const itemName = category.type

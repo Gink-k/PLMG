@@ -28,7 +28,7 @@ var SearchHandler = func(w http.ResponseWriter, r *http.Request) map[string]inte
 		}
 		charRes := map[string]interface{}{"type": "characters", "item": searchResultChars}
 		histRes := map[string]interface{}{"type": "histories", "item": searchResultHists}
-		resp["search"] = []map[string]interface{}{charRes, histRes}
+		resp["item"] = []map[string]interface{}{charRes, histRes}
 	}
 	return resp
 }
