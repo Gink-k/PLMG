@@ -63,9 +63,9 @@ function SearchResultPanel(props) {
     } else {
         const search = props.searchResult.item
         let searchList = []
-        for (let category of search) {
-            const itemName = category.type
-            const item = category.item
+        for (let category in search) {
+            const itemName = category
+            const item = search[category]
             if (!item) continue
             searchList.push(...item.map(value => {
                 const path = itemName == "characters"? value.ID : `${value.CharacterID}/histories/${value.ID}/chapters`
